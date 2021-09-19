@@ -35,6 +35,7 @@ jobs:
       - name: Create Evaluation File
         run: |
           rm -rf spec
+          touch .github/issue_template_link_check.md
           echo -e "---\ntitle: ブランチ名に誤りがあり、評価できません。\n---\n課題の評価が可能なブランチ名：step1、step2、step3、step4、step5" > .github/branch_error.md
           git clone https://github.com/kei-kamiguchi/spec_test.git spec
           git config --local user.email "action@github.com"
