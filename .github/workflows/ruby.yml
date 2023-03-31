@@ -35,8 +35,6 @@ jobs:
       - name: Create Evaluation File
         run: |
           rm -rf spec
-          echo -e "---\ntitle: ディープロ：課題評価に関するご連絡\n---\n## 課題の評価が実行できませんでした。\nブランチ名に誤りがないか確認してください。\n課題の評価が可能なブランチ名：step1、step2、step3、step4、step5" > .github/branch_error_template.md
-          echo -e "---\ntitle: ディープロ：課題評価に関するご連絡\n---\n## 課題の評価が実行できませんでした。\n### 以下の項目を確認してください。\n- RSpecの実行に必要なgem（rspec-railsとrexml）をインストールしていますか？\n- ローカルでRspecを実行できていますか？\n**上記を確認して解決しない場合、お手数ですが、ディープロの質問投稿よりこちらのリポジトリのURLを投稿いただき、課題の評価が行われない旨をお知らせください。**" > .github/execution_error_template.md
           git clone https://github.com/diveintocode-corp/cdp_web_manyo_evaluation_code.git spec
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
@@ -136,12 +134,20 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           filename: .github/feedback_template.md
+      - name: Create Error File on Branch Name
+        if: "!contains(github.ref, 'step1') && !contains(github.ref, 'step2') && !contains(github.ref, 'step3') && !contains(github.ref, 'step4') && !contains(github.ref, 'step5')"
+        run: |
+          echo -e "---\ntitle: ディープロ：課題評価に関するご連絡\n---\n## 課題の評価が実行できませんでした。\nブランチ名に誤りがないか確認してください。\n課題の評価が可能なブランチ名：step1、step2、step3、step4、step5" > .github/branch_error_template.md
       - uses: JasonEtco/create-an-issue@v2
         if: "!contains(github.ref, 'step1') && !contains(github.ref, 'step2') && !contains(github.ref, 'step3') && !contains(github.ref, 'step4') && !contains(github.ref, 'step5')"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           filename: .github/branch_error_template.md
+      - name: Create Error File on Non-branch Name
+        if: failure()
+        run: |
+          echo -e "---\ntitle: ディープロ：課題評価に関するご連絡\n---\n## 課題の評価が実行できませんでした。\n### 以下の項目を確認してください。\n- クローン元のソースコードにあらかじめ用意されているGemfileのGemを削除したり、バージョンを変更したりしていませんか？\n- カリキュラムで推奨されているものと異なるバージョンのRubyを使用していませんか？\n- カリキュラムで推奨されているものと異なるバージョンのNode.jsを使用していませんか？\n\n**上記を確認して解決しない場合、お手数ですが、ディープロの質問投稿よりこちらのリポジトリのURLを投稿いただき、課題の評価が行われない旨をお知らせください。**" > .github/execution_error_template.md
       - uses: JasonEtco/create-an-issue@v2
         if: failure()
         env:
