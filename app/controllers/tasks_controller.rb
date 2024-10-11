@@ -1,4 +1,6 @@
 class TasksController < ApplicationController
+
+
   def index
     @tasks = Task.all
   end
@@ -27,7 +29,7 @@ class TasksController < ApplicationController
   def update
     @task = Task.find(params[:id])
     if @task.update(task_params)
-      redirect_to tasks_path, notice: t('.updated')
+      redirect_to task_path(@task), notice: t('.updated')
     else
       render :edit
     end
@@ -38,6 +40,9 @@ class TasksController < ApplicationController
     @task.destroy
     redirect_to tasks_path, notice: t('.destroyed')
   end
+
+
+
 
   private
 
