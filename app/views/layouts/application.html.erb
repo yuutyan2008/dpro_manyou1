@@ -1,15 +1,35 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>CdpWebManyoTask</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+<head>
+  <title> Tasks Index Page</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-  <body>
-    <%= yield %>
-  </body>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+
+<body>
+  <%# Flashメッセージをヘッダーに表示させる %>
+  <% flash.each do |key, value| %>
+  <%= content_tag(:div, value, class: "#{key}") %>
+  <% end %>
+
+  <%# グローバルナビゲーションの作成 %>
+  <header>
+    <nav>
+      <%# Tasks Index %>
+      <ul>
+        <li><%= link_to "Tasks Index", tasks_path, id: "tasks-index" %></li>
+      </ul>
+      <%# New Task %>
+      <ul>
+        <li><%= link_to "New Task", new_task_path, id: "	new-task" %></li>
+      </ul>
+    </nav>
+  </header>
+  <%= yield %>
+</body>
+
 </html>

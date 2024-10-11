@@ -1,0 +1,36 @@
+<h1>Edit Task Page</h1>
+
+<%# フォームが表示される前にエラーメッセージを表示するためform_withの前に書く %>
+<% if @task.errors.any? %>
+
+<%# Railsがデフォルトで用意しているエラー用のスタイル（CSS）を適用 %>
+<div id="error_explanation">
+
+  <h2><%= pluralize(@task.errors.count, "error") %> prohibited this tasks from being saved:</h2>
+  <ul>
+    <% @task.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
+
+<%= form_with(model: @task, local: true) do |form| %>
+<div class="field">
+  <%= form.label :title, Task.human_attribute_name(:title) %>
+  <%= form.text_field :title %>
+</div>
+
+<div class="field">
+  <%= form.label :content, Task.human_attribute_name(:content) %>
+  <%= form.text_area :content %>
+</div>
+
+<div class="actions">
+  <%= form.submit 'Update Task', id: 'update-task' %>
+</div>
+
+<% end %>
+
+<%= link_to 'Back', tasks_path, id: 'back' %>
