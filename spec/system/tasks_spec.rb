@@ -62,14 +62,14 @@ RSpec.describe "タスク管理機能", type: :system do
 
   describe "詳細表示機能" do
     # テストケース
-    let!(:task1) do
+    let(:task) do
       FactoryBot.create(:task, title: "first_task", created_at: "2022-02-18")
     end
 
     context "任意のタスク詳細画面に遷移した場合" do
       it "そのタスクの内容が表示される" do
         # タスク詳細画面に遷移
-        visit task_path(task1)
+        visit task_path(task)
 
         # visit（遷移）したpage（この場合、タスク詳細画面）に"first_task"という文字列が、have_content（含まれていること）をexpect（確認・期待）する
         expect(page).to have_content "first_task"
