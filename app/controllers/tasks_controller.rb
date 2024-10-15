@@ -1,8 +1,7 @@
 class TasksController < ApplicationController
-
-
   def index
-    @tasks = Task.all
+    # ページネーションで1ページあたり10件表示するように設定
+    @tasks = Task.order(created_at: :desc).page(params[:page]).per(10)
   end
 
   def show
@@ -16,7 +15,7 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     if @task.save
-      redirect_to tasks_path, notice: t('.created')
+      redirect_to tasks_path, notice: t("flash.create.success")
     else
       render :new
     end
@@ -29,7 +28,7 @@ class TasksController < ApplicationController
   def update
     @task = Task.find(params[:id])
     if @task.update(task_params)
-      redirect_to task_path(@task), notice: t('.updated')
+      redirect_to task_path(@task), notice: t("flash.update.success")
     else
       render :edit
     end
@@ -38,11 +37,8 @@ class TasksController < ApplicationController
   def destroy
     @task = Task.find(params[:id])
     @task.destroy
-    redirect_to tasks_path, notice: t('.destroyed')
+    redirect_to tasks_path, notice: t("flash.destroy.success")
   end
-
-
-
 
   private
 

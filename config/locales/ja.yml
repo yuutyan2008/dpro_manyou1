@@ -1,0 +1,75 @@
+ja:
+  hello: "こんにちは、世界" # en.yml からの "Hello world" の翻訳
+  tasks:
+    index:
+      title: "タスク一覧ページ"
+      table_headers:
+        title: "タイトル"
+        content: "内容"
+        created_at: "作成日時"
+      links:
+        show: "詳細"
+        edit: "編集"
+        destroy: "削除"
+        confirm_destroy: "本当に削除してもよろしいですか？"
+        tasks_index: "タスク一覧"
+        new_task: "タスクを登録する"
+        back: "戻る"
+    new:
+      title: "タスク登録ページ"
+      form:
+        title: "タイトル"
+        content: "内容"
+        create_task: "登録する"
+      links:
+        back: "戻る"
+    show:
+      title: "タスク詳細ページ"
+      fields:
+        title: "タイトル"
+        content: "内容"
+        created_at: "作成日時"
+      links:
+        edit: "編集"
+        back: "戻る"
+    edit:
+      title: "タスク編集ページ"
+      form:
+        title: "タイトル"
+        content: "内容"
+        submit: "更新する"
+      links:
+        back: "戻る"
+    create: # en.yml のタスク作成のフラッシュメッセージ
+      created: "タスクを登録しました。"
+    update: # en.yml のタスク更新のフラッシュメッセージ
+      updated: "タスクを更新しました。"
+    destroy: # en.yml のタスク削除のフラッシュメッセージ
+      destroyed: "タスクを削除しました。"
+
+  activerecord:
+    # モデル名
+    models:
+      task: "タスク"
+    # 属性名
+    attributes:
+      task:
+        title: "タイトル"
+        content: "内容"
+        created_at: "作成日時"
+    errors:
+      messages:
+        blank: "を入力してください"
+      attributes:
+        title:
+          blank: "タイトルを入力してください"
+        content:
+          blank: "内容を入力してください"
+
+  flash:
+    create:
+      success: "タスクを登録しました"
+    update:
+      success: "タスクを更新しました"
+    destroy:
+      success: "タスクを削除しました"
