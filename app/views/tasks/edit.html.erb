@@ -34,12 +34,12 @@
 
 <div class="field">
   <%= form.label :priority %>
-  <%= form.select :priority, options_for_select([['低', 'low'], ['中', 'middle'], ['高', 'high']]),  {include_blank: true} %>
+  <%= form.select :priority, options_for_select([['低', 'low'], ['中', 'middle'], ['高', 'high']], @task.priority) %>
 </div>
 
 <div class="field">
   <%= form.label :status %>
-  <%= form.select :status, options_for_select([['未着手', 'not_started'], ['着手中', 'under_way'], ['完了', 'completed']]), { include_blank: true } %>
+  <%= form.select :status, options_for_select([['未着手', 'not_started'], ['着手中', 'under_way'], ['完了', 'completed']], @task.status)  %>
 </div>
 
 <div class="actions">
