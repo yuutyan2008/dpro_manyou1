@@ -11,6 +11,20 @@
 </p>
 
 <p>
+  <strong><%= Task.human_attribute_name(:deadline_on) %>:</strong>
+  <%= @task.deadline_on %>
+</p>
+
+<p>
+  <strong><%= Task.human_attribute_name(:priority) %>:</strong>
+  <%= @task.priority %>
+</p>
+<p>
+  <strong><%= Task.human_attribute_name(:status) %>:</strong>
+  <%= @task.status %>
+</p>
+
+<p>
   <strong><%= Task.human_attribute_name(:created_at) %>:</strong>
   <%= @task.created_at %>
 </p>
