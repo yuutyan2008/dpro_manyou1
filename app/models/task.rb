@@ -17,9 +17,9 @@ class Task < ApplicationRecord
         ->(status) { where(status: statuses[status]) if status.present? }
 
   # ソート用スコープ
-  scope :sort_by_deadline, -> { order(deadline_on: :asc, created_at: :desc) }
-  scope :sort_by_priority, -> { order(priority: :desc, created_at: :desc) }
-  #   scope :sort_by_created_at, -> { order(created_at: :desc) }
+  scope :sort_by_deadline, -> { order(deadline_on: :desc) }
+  scope :sort_by_priority, -> { order(priority: :desc) }
+  scope :sort_by_created_at, -> { order(created_at: :desc) }
 
   # scopeメソッドの内容はココと同じ意味
   #   def self.search_by_status(status)
