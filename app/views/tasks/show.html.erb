@@ -7,7 +7,22 @@
 
 <p>
   <strong><%= Task.human_attribute_name(:content) %>:</strong>
+
   <%= @task.content %>
+</p>
+
+<p>
+  <strong><%= Task.human_attribute_name(:deadline_on) %>:</strong>
+  <%= @task.deadline_on %>
+</p>
+
+<p>
+  <strong><%= Task.human_attribute_name(:priority) %>:</strong>
+  <%= Task.human_attribute_name("priority.#{@task.priority}") %>
+</p>
+<p>
+  <strong><%= Task.human_attribute_name(:status) %>:</strong>
+  <%= Task.human_attribute_name("status.#{@task.status}") %>
 </p>
 
 <p>
