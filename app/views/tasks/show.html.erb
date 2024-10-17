@@ -18,11 +18,11 @@
 
 <p>
   <strong><%= Task.human_attribute_name(:priority) %>:</strong>
-  <%= @task.priority %>
+  <%= Task.human_attribute_name("priority.#{@task.priority}") %>
 </p>
 <p>
   <strong><%= Task.human_attribute_name(:status) %>:</strong>
-  <%= @task.status %>
+  <%= Task.human_attribute_name("status.#{@task.status}") %>
 </p>
 
 <p>
