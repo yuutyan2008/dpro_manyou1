@@ -4,19 +4,23 @@ module SessionsHelper
     @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
   end
 
+  # ログイン中のユーザーが管理者かどうかを判定する
+  def admin_user?
+    current_user&.admin?
+  end
+
   # ユーザーがログインしているか確認
   def logged_in?
     current_user.present?
   end
 
-    # ユーザーがログイン中のユーザーと一致するか確認
-    def current_user?(user)
-      user == current_user
-    end
-  
+  # ユーザーがログイン中のユーザーと一致するか確認
+  def current_user?(user)
+    user == current_user
+  end
+
   # ユーザーがログイン中のユーザーと一致するか確認
   def log_in(user)
     session[:user_id] = user.id
   end
 end
-

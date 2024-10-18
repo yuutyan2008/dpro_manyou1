@@ -1,0 +1,47 @@
+<h1>ユーザ編集ページ</h1>
+
+<%# フォームが表示される前にエラーメッセージを表示するためform_withの前に書く %>
+<% if @user.errors.any? %>
+
+<%# Railsがデフォルトで用意しているエラー用のスタイル（CSS）を適用 %>
+<div id="error_explanation">
+
+  <h2><%= pluralize(@user.errors.count, "error") %> prohibited this <%= @user.name %> from being saved:</h2>
+  <ul>
+    <% @user.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
+<%= form_with model: @user, url: admin_user_path(@user), local: true do |f| %>
+<div>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+</div>
+
+<div>
+  <%= f.label :email %>
+  <%= f.email_field :email %>
+</div>
+
+<div>
+  <%= f.label :password %>
+  <%= f.password_field :password, autocomplete: "off" %>
+</div>
+
+<div>
+  <%= f.label :password_confirmation %>
+  <%= f.password_field :password_confirmation, autocomplete: "off" %>
+</div>
+
+<div>
+  <%= f.label :admin, "管理者権限" %>
+  <%= f.check_box :admin %>
+</div>
+
+<%= f.submit "更新する", id: 'update-user' %>
+<% end %>
+
+<%= link_to '戻る', admin_users_path, id: 'back' %>

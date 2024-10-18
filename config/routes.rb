@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   #
+  # 管理者専用のルーティング
+  namespace :admin do
+    resources :users
+  end
+
+  # 一般user用
   root "tasks#index"
   resources :tasks
   # form_withを使用するためルーティングにcreateアクションを追加

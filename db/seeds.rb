@@ -6,6 +6,11 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 #
+#
+# 既存のデータを削除
+Task.delete_all
+User.delete_all
+
 # ユーザーのサンプルデータを作成
 5.times do |n|
   User.create!(
@@ -16,6 +21,15 @@
     admin: false
   )
 end
+
+# 管理者ユーザーを追加
+User.create!(
+  name: "Admin_User",
+  email: "admin@example.com",
+  password: "adminpassword",
+  password_confirmation: "adminpassword",
+  admin: true # 管理者ユーザー
+)
 
 # 50件のタスクデータを作成
 50.times do |n|
