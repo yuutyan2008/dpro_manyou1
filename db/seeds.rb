@@ -16,7 +16,7 @@ User.delete_all
   User.create!(
     name: "User_#{n + 1}",
     email: "user_#{n + 1}@example.com",
-    password: "password",
+    password_digest: "password",
     password_confirmation: "password",
     admin: false
   )
@@ -26,7 +26,7 @@ end
 User.create!(
   name: "Admin_User",
   email: "admin@example.com",
-  password: "adminpassword",
+  password_digest: "adminpassword",
   password_confirmation: "adminpassword",
   admin: true # 管理者ユーザー
 )
