@@ -1,13 +1,22 @@
 class TasksController < ApplicationController
+  # controllerのアクション実行前にログインが必要
+  before_action :login_required
+
+  # アクション実行前にset_taskが必要なもの。indexは特定の1つのタスクを取得する必要がないため不要
+  # editは編集データを取得する必要がある
+  before_action :set_task, only: %i[show edit update destroy]
+
   def index
+    # dログインしているユーザーのタスクのみ表示
+    @tasks = current_user.tasks
     # 検索パラメータの初期化
+    # earch_paramsメソッドで許可した値のみ取得して@search_paramsに格納
     @search_params = search_params
     # 検索機能（スコープを適用）
     @tasks =
-      Task
-        .all
-        .search_by_title(@search_params[:title])
-        .search_by_status(@search_params[:status])
+      @tasks.search_by_title(@search_params[:title]).search_by_status(
+        @search_params[:status]
+      )
 
     # puts @search_params.inspect #コンソールでエラー原因の確認に使用
 
@@ -39,10 +48,12 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    # current_userはusercontrollerで設定、ログイン中のuser_idでuser情報を取得
+    @task = current_user.tasks.build(task_params)
     if @task.save
       redirect_to tasks_path, notice: t("flash.create.success")
     else
+      Rails.logger.info @task.errors.full_messages.to_sentence # エラー内容をログに出力
       render :new
     end
   end
@@ -82,6 +93,7 @@ class TasksController < ApplicationController
   # このメソッドを追加して、search パラメータ内の title と status だけを許可します。
   def search_params
     # search パラメータが存在することを確認し、その中で title と status だけを許可します。
+    # :search パラメータが存在しない場合に、空のハッシュ {} を返す
     params.fetch(:search, {}).permit(:title, :status)
   end
 end

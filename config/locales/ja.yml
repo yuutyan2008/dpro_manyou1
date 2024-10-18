@@ -54,6 +54,7 @@ ja:
     # モデル名
     models:
       task: "タスク"
+      user: "ユーザー"
     # 属性名
     attributes:
       task:
@@ -71,16 +72,28 @@ ja:
         not_started: "未着手"
         under_way: "着手中"
         completed: "完了"
-
+      user:
+        name: "名前"
+        email: "メールアドレス"
+        password_digest: "パスワード"
+        password_confirmation: "パスワード（確認）"
     errors:
       messages:
         blank: "を入力してください"
+        taken: "はすでに使用されています"
+        too_short: "は%{count}文字以上で入力してください"
       attributes:
-        title:
-          blank: "タイトルを入力してください"
-        content:
-          blank: "内容を入力してください"
-
+        user:
+          name:
+            blank: "名前を入力してください"
+          email:
+            blank: "メールアドレスを入力してください"
+            taken: "メールアドレスはすでに使用されています"
+          password:
+            blank: "パスワードを入力してください"
+            too_short: "パスワードは6文字以上で入力してください"
+          password_confirmation:
+            confirmation: "パスワード（確認）とパスワードの入力が一致しません"
   flash:
     create:
       success: "タスクを登録しました"
@@ -88,3 +101,13 @@ ja:
       success: "タスクを更新しました"
     destroy:
       success: "タスクを削除しました"
+    user:
+      create:
+        success: "アカウントを登録しました"
+      update:
+        success: "アカウントを更新しました"
+      login:
+        success: "ログインしました"
+        failure: "メールアドレスまたはパスワードに誤りがあります"
+      logout:
+        success: "ログアウトしました"

@@ -10,6 +10,9 @@ class Task < ApplicationRecord
   enum priority: { low: 0, middle: 1, high: 2 }
   enum status: { not_started: 0, under_way: 1, completed: 2 }
 
+  # 各タスクは1人のユーザーに属する
+  belongs_to :user
+
   # 検索用スコープ
   scope :search_by_title,
         ->(title) { where("title LIKE ?", "%#{title}%") if title.present? }
