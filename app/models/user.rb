@@ -22,7 +22,7 @@ class User < ApplicationRecord
 
   # パスワードにバリデーションを設定
   # has_secure_password を使用するとpassword という属性はデータベースには存在しませんが、ユーザーが入力したパスワードに対するバリデーションやハッシュ化が password_digest に適用されます。
-  validates :password, length: { minimum: 6 }, allow_nil: true
+  # validates :password, length: { minimum: 6 }, allow_nil: true
 
   # User モデルと Task モデルの間にアソシエーションを設定
   # ユーザーが削除されると、そのユーザーに関連するタスクも削除

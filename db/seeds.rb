@@ -8,6 +8,7 @@
 #
 #
 # 既存のデータを削除
+# 既存のデータを削除
 Task.delete_all
 User.delete_all
 
@@ -16,7 +17,7 @@ User.delete_all
   User.create!(
     name: "User_#{n + 1}",
     email: "user_#{n + 1}@example.com",
-    password_digest: "password",
+    password: "password", # password_digestではなくpasswordを使用
     password_confirmation: "password",
     admin: false
   )
@@ -26,7 +27,7 @@ end
 User.create!(
   name: "Admin_User",
   email: "admin@example.com",
-  password_digest: "adminpassword",
+  password: "adminpassword", # password_digestではなくpasswordを使用
   password_confirmation: "adminpassword",
   admin: true # 管理者ユーザー
 )
@@ -39,6 +40,6 @@ User.create!(
     deadline_on: Date.today + rand(1..30).days, # 今日から1日～30日後のランダムな日付を設定
     priority: rand(0..2), # enumに対応するpriorityをランダムに設定 (low: 0, middle: 1, high: 2)
     status: rand(0..2), # enumに対応するstatusをランダムに設定 (not_started: 0, under_way: 1, completed: 2)
-    user_id: User.all.sample.id # ランダムなユーザーを関連付ける。sampleはArray クラスのメソッドで、配列からランダムに1つの要素を取得するために使います
+    user_id: User.all.sample.id # ランダムなユーザーを関連付ける
   )
 end

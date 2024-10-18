@@ -18,7 +18,7 @@ ja:
       form:
         name: "名前"
         email: "メールアドレス"
-        password_digest: "パスワード"
+        password: "パスワード"
         password_confirmation: "パスワード（確認）"
         admin: "管理者権限"
         create_user: "登録する"
@@ -42,7 +42,7 @@ ja:
       form:
         name: "名前"
         email: "メールアドレス"
-        password_digest: "パスワード"
+        password: "パスワード"
         password_confirmation: "パスワード（確認）"
         admin: "管理者権限"
         update_user: "更新する"
@@ -124,12 +124,12 @@ ja:
       user:
         name: "名前"
         email: "メールアドレス"
-        password_digest: "パスワード"
+        password: "パスワード"
         password_confirmation: "パスワード（確認）"
       # ログイン状態を管理するための一時的なデータ
       session:
         email: メールアドレス
-        password_digest: パスワード
+        password: パスワード
     errors:
       messages:
         blank: "を入力してください"
@@ -142,7 +142,7 @@ ja:
           email:
             blank: "メールアドレスを入力してください"
             taken: "メールアドレスはすでに使用されています"
-          password_digest:
+          password:
             blank: "パスワードを入力してください"
             too_short: "パスワードは6文字以上で入力してください"
           password_confirmation:
