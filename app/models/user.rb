@@ -17,7 +17,12 @@ class User < ApplicationRecord
   # has_secure_passwordと書くことでユーザーが新規登録を行う際には password と password_confirmation が必須になります
   # Rails は内部的に password と password_confirmation という仮想的な属性を作成し、これらに対してバリデーションが行われます
   # よってパスワードのvalidationが不要になります
+  # validations: falseでvalidationを無効化
   has_secure_password
+
+  # パスワードにバリデーションを設定
+  # has_secure_password を使用するとpassword という属性はデータベースには存在しませんが、ユーザーが入力したパスワードに対するバリデーションやハッシュ化が password_digest に適用されます。
+  validates :password, length: { minimum: 6 }, allow_nil: true
 
   # User モデルと Task モデルの間にアソシエーションを設定
   # ユーザーが削除されると、そのユーザーに関連するタスクも削除

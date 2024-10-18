@@ -133,7 +133,7 @@ ja:
     errors:
       messages:
         blank: "を入力してください"
-        taken: "はすでに使用されています"
+        taken: "はすでに存在します"
         too_short: "は%{count}文字以上で入力してください"
       attributes:
         user:
