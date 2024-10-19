@@ -1,12 +1,11 @@
-<h1>アカウント登録ページ</h1>
+<h1><%= t('view.users.new.title') %></h1>
 
 <%# フォームが表示される前にエラーメッセージを表示するためform_withの前に書く %>
 <% if @user.errors.any? %>
 
 <%# Railsがデフォルトで用意しているエラー用のスタイル（CSS）を適用 %>
 <div id="error_explanation">
-
-  <h2><%= pluralize(@user.errors.count, "error") %> prohibited this <%= @user.name %> from being saved:</h2>
+  <h2><%= t('activerecord.errors.models.user.prohibited', count: user.errors.count) %></h2>
   <ul>
     <% @user.errors.full_messages.each do |message| %>
     <li><%= message %></li>
@@ -24,5 +23,5 @@
 <%= f.password_field :password %>
 <%= f.label :password_confirmation %>
 <%= f.password_field :password_confirmation %>
-<%= f.submit "登録する", id: "create-user" %>
+<%= f.submit t('helpers.submit.create'), id: "create-user" %>
 <% end %>

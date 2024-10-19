@@ -19,7 +19,11 @@ module Admin
     def create
       @user = User.new(user_params)
       if @user.save
-        redirect_to admin_users_path, notice: "ユーザを登録しました"
+        # 国際化（i18n）
+        # ja.yml に定義したフラッシュメッセージに翻訳
+        flash[:notice] = t("flash.users.create")
+        # ユーザ登録に成功した場合の処理、user一覧画面に遷移
+        redirect_to users_path(@user.id)
       else
         render :new
       end

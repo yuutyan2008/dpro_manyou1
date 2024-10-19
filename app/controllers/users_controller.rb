@@ -24,9 +24,9 @@ class UsersController < ApplicationController
       flash[:notice] = t("flash.users.create")
 
       # ユーザ登録に成功した場合の処理、タスク一覧画面に遷移
-      redirect_to tasks_path(@user.id)
+      redirect_to tasks_path
     else
-      puts @user.errors.full_messages # エラーメッセージを表示
+      puts @user.errors.full_messages # validationメッセージを表示
       # ユーザ登録に失敗した場合の処理:再び登録画面が表示
       render :new
     end
@@ -47,7 +47,7 @@ class UsersController < ApplicationController
       # 国際化（i18n）
       # ja.yml に定義したフラッシュメッセージに翻訳
       flash[:notice] = t("flash.users.update")
-      redirect_to user_path(@user)
+      redirect_to user_path
     else
       render :edit
     end

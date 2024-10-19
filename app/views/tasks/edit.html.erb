@@ -1,4 +1,4 @@
-<h1><%= t('tasks.edit.title') %></h1>
+<h1><%= t('view.tasks.edit.title') %></h1>
 
 <%# フォームが表示される前にエラーメッセージを表示するためform_withの前に書く %>
 <% if @task.errors.any? %>
@@ -43,9 +43,9 @@
 </div>
 
 <div class="actions">
-  <%= form.submit t('tasks.edit.form.submit'), id: 'update-task' %>
+  <%= form.submit t('helpers.submit.update'), id: 'update-task' %>
 </div>
 
 <% end %>
 
-<%= link_to t('tasks.edit.links.back'), tasks_path(@task), id: 'back' %>
+<%= link_to t('common.back'), tasks_path(@task), id: 'back' %>

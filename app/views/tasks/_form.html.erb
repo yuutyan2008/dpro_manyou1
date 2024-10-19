@@ -2,7 +2,7 @@
 
 <% if task.errors.any? %>
 <div id="error_explanation">
-  <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
+  <h2><%= t('activerecord.errors.models.task.prohibited', count: task.errors.count) %></h2>
 
   <ul>
     <% task.errors.full_messages.each do |message| %>
@@ -29,15 +29,23 @@
 
 <div class="field">
   <%= form.label :priority %>
-  <%= form.select :priority, options_for_select([['低', 'low'], ['中', 'middle'], ['高', 'high']]),  {include_blank: true} %>
+  <%= form.select :priority, options_for_select([
+    [t('helpers.tasks/priority.low'), 'low'],
+    [t('helpers.tasks/priority.middle'), 'middle'],
+    [t('helpers.tasks/priority.high'), 'high']
+  ]), { include_blank: true } %>
 </div>
 
 <div class="field">
   <%= form.label :status %>
-  <%= form.select :status, options_for_select([['未着手', 'not_started'], ['着手中', 'under_way'], ['完了', 'completed']]), { include_blank: true } %>
+  <%= form.select :status, options_for_select([
+    [t('helpers.tasks/status.not_started'), 'not_started'],
+    [t('helpers.tasks/status.under_way'), 'under_way'],
+    [t('helpers.tasks/status.completed'), 'completed']
+  ]), { include_blank: true } %>
 </div>
 
 <div class="actions">
-  <%= form.submit t('tasks.new.form.create_task'), id: 'create-task' %>
+  <%= form.submit t('helpers.submit.create'), id: 'create-task' %>
 </div>
 <% end %>

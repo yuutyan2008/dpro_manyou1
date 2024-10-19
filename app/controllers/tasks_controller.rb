@@ -4,7 +4,7 @@ class TasksController < ApplicationController
 
   # アクション実行前にset_taskが必要なもの。indexは特定の1つのタスクを取得する必要がないため不要
   # editは編集データを取得する必要がある
-  before_action :set_task, only: %i[show edit update destroy]
+  before_action :search_params, only: %i[show edit update destroy]
 
   def index
     # dログインしているユーザーのタスクのみ表示
