@@ -1,6 +1,8 @@
 class TasksController < ApplicationController
   # controllerのアクション実行前にログインが必要
   before_action :login_required
+  # 他人のタスク画面にアクセスしようとした場合、タスク一覧画面に遷移
+  before_action :correct_user, only: %i[show edit update destroy]
 
   # アクション実行前にset_taskが必要なもの。indexは特定の1つのタスクを取得する必要がないため不要
   # editは編集データを取得する必要がある
@@ -95,5 +97,14 @@ class TasksController < ApplicationController
     # search パラメータが存在することを確認し、その中で title と status だけを許可します。
     # :search パラメータが存在しない場合に、空のハッシュ {} を返す
     params.fetch(:search, {}).permit(:title, :status)
+  end
+
+  # 他人のタスク詳細画面や編集画面にアクセスしようとした場合、タスク一覧画面にリダイレクト
+  def correct_user
+    @task = current_user.tasks.find_by(id: params[:id])
+    unless @task
+      flash[:alert] = I18n.t("flash.tasks.index")
+      redirect_to tasks_path
+    end
   end
 end

@@ -46,6 +46,35 @@ ja:
         title: "アカウント編集ページ"
 
   activerecord:
+    errors:
+      models:
+        user:
+          prohibited: "%{count}件のエラーにより、このユーザは保存されませんでした。"
+          attributes:
+            name:
+              blank: "を入力してください"
+            email:
+              blank: "を入力してください"
+              taken: "はすでに使用されています"
+            password:
+              blank: "を入力してください"
+              too_short: "は6文字以上で入力してください"
+            password_confirmation:
+              confirmation: "とパスワードの入力が一致しません"
+        task:
+          prohibited: "%{count}件のエラーにより、このタスクは保存されませんでした。"
+          # user:
+          attributes:
+            name:
+              blank: "名前を入力してください"
+            email:
+              blank: "メールアドレスを入力してください"
+              taken: "メールアドレスはすでに使用されています"
+            password:
+              blank: "パスワードを入力してください"
+              too_short: "パスワードは6文字以上で入力してください"
+            password_confirmation:
+              confirmation: "パスワード（確認）とパスワードの入力が一致しません"
     # モデル名
     models:
       task:
@@ -65,36 +94,7 @@ ja:
         email: "メールアドレス"
         password: "パスワード"
         password_confirmation: "パスワード（確認）"
-
-    errors:
-      models:
-        user:
-          prohibited: "%{count}件のエラーにより、このユーザは保存されませんでした。"
-          attributes:
-            name:
-              blank: "名前を入力してください"
-            email:
-              blank: "メールアドレスを入力してください"
-              taken: "メールアドレスはすでに使用されています"
-            password:
-              blank: "パスワードを入力してください"
-              too_short: "パスワードは6文字以上で入力してください"
-            password_confirmation:
-              confirmation: "パスワード（確認）とパスワードの入力が一致しません"
-        task:
-          prohibited: "%{count}件のエラーにより、このタスクは保存されませんでした。"
-          user:
-            attributes:
-              name:
-                blank: "名前を入力してください"
-              email:
-                blank: "メールアドレスを入力してください"
-                taken: "メールアドレスはすでに使用されています"
-              password:
-                blank: "パスワードを入力してください"
-                too_short: "パスワードは6文字以上で入力してください"
-              password_confirmation:
-                confirmation: "パスワード（確認）とパスワードの入力が一致しません"
+        admin: "管理者権限"
 
     users:
       # # カラム名
@@ -129,10 +129,14 @@ ja:
       create: "アカウントを登録しました"
       update: "アカウントを更新しました"
       destroy: "アカウントを削除しました"
+    tasks:
+      index: "アクセス権限がありません"
     sessions:
       create_success: "ログインしました"
       create_failure: "メールアドレスまたはパスワードに誤りがあります"
       destroy: "ログアウトしました"
+      login_required: "ログインしてください"
+      logout_required: "ログアウトしてください"
 
   # 複数サイトの共通設定をココに書く
   common:
@@ -142,4 +146,3 @@ ja:
     destroy: "削除"
     confirm_destroy: "本当に削除してもよろしいですか？"
     back: "戻る"
-    login_required: "ログインしてください"

@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  # 管理者しか管理者画面にアクセスできないようにする
+  before_action :admin_user
   # ユーザーが未ログインの状態でアクセス可能なページを設定
   # ユーザー登録用のnewやcreateアクションではlogin_requiredメソッドが実行されないように設定
   skip_before_action :login_required, only: %i[new create]
@@ -6,7 +8,6 @@ class UsersController < ApplicationController
   # 指定したアクションが呼ばれた際、correct_userメソッドを先に実行する
   before_action :correct_user, only: %i[show edit update destroy]
 
-  #
   def new
     #新しいUserモデルのインスタンスを作成し、登録フォームで使用できるようにします。
     @user = User.new
@@ -70,6 +71,14 @@ class UsersController < ApplicationController
       :password,
       :password_confirmation
     )
+  end
+
+  # 一般ユーザが管理画面にアクセスできないようにする
+  def admin_user
+    unless current_user.admin?
+      flash[:alert] = "管理者以外アクセスできません"
+      redirect_to tasks_path
+    end
   end
 
   # 本人しか各画面にアクセスできないよう制限を追加
