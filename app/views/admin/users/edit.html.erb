@@ -1,4 +1,4 @@
-<h1>ユーザ編集ページ</h1>
+<h1><%= t('view.users.admin.edit.title') %></h1>
 
 <%# フォームが表示される前にエラーメッセージを表示するためform_withの前に書く %>
 <% if @user.errors.any? %>
@@ -37,11 +37,11 @@
 </div>
 
 <div>
-  <%= f.label :admin, "管理者権限" %>
+  <%= f.label :admin, <%= t('activerecord.attributes.user.admin') %>
   <%= f.check_box :admin %>
 </div>
 
-<%= f.submit "更新する", id: 'update-user' %>
+<%= f.submit t('helpers.submit.update'), id: 'update-user' %>
 <% end %>
 
-<%= link_to '戻る', admin_users_path, id: 'back' %>
+<%= link_to t('common.back'), admin_users_path, id: 'back' %>

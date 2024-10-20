@@ -3,36 +3,12 @@ ja:
     tasks:
       index:
         title: "タスク一覧ページ"
-        table_headers:
-          title: "タイトル"
-          content: "内容"
-          created_at: "作成日時"
-
       new:
         title: "タスク登録ページ"
-        # form:
-        #   title: "タイトル"
-        #   content: "内容"
-        #   create_task: "登録する"
       show:
         title: "タスク詳細ページ"
-        fields:
-          title: "タイトル"
-          content: "内容"
-          created_at: "作成日時"
       edit:
         title: "タスク編集ページ"
-        # form:
-        #   title: "タイトル"
-        #   content: "内容"
-        #   submit: "更新する"
-
-      # ボタンの表示を日本語化
-      # helpers:
-      #   submit:
-      #     create: 登録する
-      #     update: 更新する
-
       create: # en.yml のタスク作成のフラッシュメッセージ
         created: "タスクを登録しました。"
       update: # en.yml のタスク更新のフラッシュメッセージ
@@ -41,9 +17,22 @@ ja:
         destroyed: "タスクを削除しました。"
     users:
       new:
-        title: "アカウント登録ページ"
+        title: "ユーザ登録ページ"
       edit:
         title: "アカウント編集ページ"
+      index:
+        title: "ユーザ一覧ページ"
+      show:
+        title: "アカウント詳細ページ"
+      admin: # adminをネスト
+        new:
+          title: "ユーザ登録ページ"
+        edit:
+          title: "ユーザ編集ページ"
+        index:
+          title: "ユーザ一覧ページ"
+        show:
+          title: "ユーザ詳細ページ"
 
   activerecord:
     errors:
@@ -95,20 +84,11 @@ ja:
         password: "パスワード"
         password_confirmation: "パスワード（確認）"
         admin: "管理者権限"
-
-    users:
-      # # カラム名
-      # attributes:
-      index:
-        title: "ユーザ一覧ページ"
-        table_headers:
-          name: "名前"
-          email: "メールアドレス"
-          admin: "管理者権限"
-          task_count: "タスク数"
-      session:
-        email: メールアドレス
-        password: パスワード
+        task_num: "タスク数"
+  session:
+    title: "ログインページ"
+    email: メールアドレス
+    password: パスワード
   # selectボタン、submitボタンの日本語化
   helpers:
     # 一つのstatus属性を複数のtaskが持つのでtasksと複数形にする

@@ -1,4 +1,4 @@
-<h1><%= t('users.edit.title') %></h1>
+<h1><%= t('view.users.edit.title') %></h1>
 
 <%# フォームが表示される前にエラーメッセージを表示するためform_withの前に書く %>
 <% if @user.errors.any? %>
@@ -37,9 +37,9 @@
 </div>
 
 <div class="actions">
-  <%= f.submit "更新する", class: "btn btn-primary", id: "update-user" %>
+  <%= f.submit t('helpers.submit.update'), class: "btn btn-primary", id: "update-user" %>
 </div>
 <div class="actions">
-  <%= link_to "戻る", user_path(@user), class: "btn btn-primary", id: "back" %>
+  <%= link_to t('common.back'), user_path(@user), class: "btn btn-primary", id: "back" %>
 </div>
 <% end %>

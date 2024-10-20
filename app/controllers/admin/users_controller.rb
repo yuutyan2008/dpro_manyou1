@@ -1,5 +1,6 @@
 module Admin
   class UsersController < ApplicationController
+    #管理者しか管理者画面にアクセスできないようにする
     before_action :admin_user
 
     def index

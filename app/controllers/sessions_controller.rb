@@ -1,5 +1,7 @@
 class SessionsController < ApplicationController
-  #
+  # current_user が nil の場合はログイン画面にリダイレクト
+  before_action :login_required
+
   # 以下の場合はbefore_actionの実行をしない
   skip_before_action :login_required, only: %i[new create]
   # ログイン中のユーザーがログインやアカウント登録のページにアクセスしようとした場合redirect_if_logged_inを実行
@@ -43,17 +45,24 @@ class SessionsController < ApplicationController
     session.delete(:user_id) # セッションオブジェクトからユーザIDを削除
 
     #ログアウトした際は、ログインページに遷移させ、Flashを表示させる
-    flash[:notice] = i18n.t("flash.sessions.destroy")
+    flash[:notice] = I18n.t("flash.sessions.destroy")
     redirect_to new_session_path
   end
 
   private
 
+  def login_required
+    unless current_user
+      flash[:alert] = "ログインしてください"
+      redirect_to login_path
+    end
+  end
+
   # ログイン中のユーザーがログインやアカウント登録のページにアクセスしようとした場合、
   # タスク一覧画面にリダイレクトし、フラッシュメッセージを表示する
   def redirect_if_logged_in
     if logged_in?
-      flash[:alert] = i18n.t("flash.sessions.logout_required")
+      flash[:alert] = I18n.t("flash.sessions.logout_required")
       redirect_to tasks_path
     end
   end

@@ -1,4 +1,4 @@
-<h1>ログインページ</h1>
+<h1><%= t('session.title') %></h1>
 
 <%# セッションの場合はリソースの名前とそれに対応するURLを具体的に指定する必要があります %>
 <%# セッション以外のフォームは、form_for(@user) %>
@@ -6,9 +6,9 @@
 <%= form_with(scope: :session, url: sessions_path, local: true) do |f| %>
 
 <%# f.labelはform_withで使えるメソッドで<label>タグを生成 %>
-<%= f.label :メールアドレス %>
+<%= f.label :email, t('session.email') %>
 <%= f.email_field :email %>
-<%= f.label :パスワード %>
+<%= f.label :password, t('session.password') %>
 <%= f.password_field :password %>
 <%= f.submit "ログイン", id: "create-session" %>
 <% end %>
