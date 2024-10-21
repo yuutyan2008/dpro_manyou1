@@ -113,7 +113,7 @@ ja:
       update: 更新する
   flash:
     users:
-      create: "アカウントを登録しました"
+      create: "ユーザを登録しました"
       update: "アカウントを更新しました"
       destroy: "アカウントを削除しました"
     tasks:

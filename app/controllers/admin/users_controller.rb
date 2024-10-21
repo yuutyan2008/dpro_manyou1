@@ -24,7 +24,7 @@ module Admin
         # ja.yml に定義したフラッシュメッセージに翻訳
         flash[:notice] = t("flash.users.create")
         # ユーザ登録に成功した場合の処理、user一覧画面に遷移
-        redirect_to users_path(@user.id)
+        redirect_to admin_users_path
       else
         render :new
       end
@@ -37,9 +37,12 @@ module Admin
     def update
       @user = User.find(params[:id])
       if @user.update(user_params)
-        redirect_to admin_user_path(@user), notice: "ユーザを更新しました"
+        # 国際化（i18n）
+        # ja.yml に定義したフラッシュメッセージに翻訳
+        flash[:notice] = t("flash.users.update")
+        redirect_to admin_users_path
       else
-        render :edit
+        redirect_to admin_users_path, alert: "管理者が0人になるため権限を変更できません"
       end
     end
 
@@ -47,7 +50,9 @@ module Admin
       @user = User.find(params[:id])
       if User.where(admin: true).count > 1 || !@user.admin?
         @user.destroy
-        redirect_to admin_users_path, notice: "ユーザを削除しました"
+        # 国際化（i18n）
+        # ja.yml に定義したフラッシュメッセージに翻訳
+        flash[:notice] = t("flash.users.destroy")
       else
         redirect_to admin_users_path, alert: "管理者が0人になるため削除できません"
       end
