@@ -65,7 +65,7 @@ class UsersController < ApplicationController
   def login_required
     unless current_user
       flash[:alert] = "ログインしてください"
-      redirect_to login_path
+      redirect_to new_session_path
     end
   end
 
@@ -83,6 +83,6 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     # パラメータのidを使ってデータベースからユーザを取り出し、current_user?メソッドの引数に渡すことで、アクセス先が本人のものか確認しています。
     # 本人ではなかった場合、そのユーザの詳細画面に遷移させます。
-    redirect_to current_user unless current_user?(@user)
+    redirect_to new_session_path
   end
 end

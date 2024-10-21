@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
     unless logged_in?
       flash[:alert] = I18n.t("flash.sessions.login_required")
       # current_userがnilの場合、ログイン画面に遷移させることで、未ログインのユーザからのアクセスを禁止
-      redirect_to new_session_path unless current_user
+      redirect_to new_session_path
     end
   end
 end

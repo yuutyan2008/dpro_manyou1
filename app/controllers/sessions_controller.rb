@@ -1,9 +1,7 @@
 class SessionsController < ApplicationController
-  # current_user が nil の場合はログイン画面にリダイレクト
-  before_action :login_required
-
-  # 以下の場合はbefore_actionの実行をしない
+  # 新規登録やログインページではログインが必須でないため、login_requiredをスキップ
   skip_before_action :login_required, only: %i[new create]
+
   # ログイン中のユーザーがログインやアカウント登録のページにアクセスしようとした場合redirect_if_logged_inを実行
   before_action :redirect_if_logged_in, only: %i[new create]
 

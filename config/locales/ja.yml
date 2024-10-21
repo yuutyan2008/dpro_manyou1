@@ -113,9 +113,9 @@ ja:
       update: 更新する
   flash:
     users:
-      create: "ユーザを登録しました"
-      update: "アカウントを更新しました"
-      destroy: "アカウントを削除しました"
+      create: "アカウントを登録しました"
+      update: "ユーザを更新しました"
+      destroy: "ユーザを削除しました"
     tasks:
       index: "アクセス権限がありません"
       created: "タスクを登録しました。"
