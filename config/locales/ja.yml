@@ -9,15 +9,10 @@ ja:
         title: "タスク詳細ページ"
       edit:
         title: "タスク編集ページ"
-      create: # en.yml のタスク作成のフラッシュメッセージ
-        created: "タスクを登録しました。"
-      update: # en.yml のタスク更新のフラッシュメッセージ
-        updated: "タスクを更新しました。"
-      destroy: # en.yml のタスク削除のフラッシュメッセージ
-        destroyed: "タスクを削除しました。"
+
     users:
       new:
-        title: "ユーザ登録ページ"
+        title: "アカウント登録ページ"
       edit:
         title: "アカウント編集ページ"
       index:
@@ -50,6 +45,7 @@ ja:
               too_short: "は6文字以上で入力してください"
             password_confirmation:
               confirmation: "とパスワードの入力が一致しません"
+
         task:
           prohibited: "%{count}件のエラーにより、このタスクは保存されませんでした。"
           # user:
@@ -64,6 +60,7 @@ ja:
               too_short: "パスワードは6文字以上で入力してください"
             password_confirmation:
               confirmation: "パスワード（確認）とパスワードの入力が一致しません"
+
     # モデル名
     models:
       task:
@@ -77,7 +74,6 @@ ja:
         deadline_on: "終了期限"
         priority: "優先度"
         status: "ステータス"
-
       user:
         name: "名前"
         email: "メールアドレス"
@@ -85,6 +81,17 @@ ja:
         password_confirmation: "パスワード（確認）"
         admin: "管理者権限"
         task_num: "タスク数"
+    enums:
+      task:
+        priority:
+          low: "低"
+          middle: "中"
+          high: "高"
+        status:
+          not_started: "未着手"
+          under_way: "着手中"
+          completed: "完了"
+
   session:
     title: "ログインページ"
     email: メールアドレス
@@ -111,6 +118,9 @@ ja:
       destroy: "アカウントを削除しました"
     tasks:
       index: "アクセス権限がありません"
+      created: "タスクを登録しました。"
+      updated: "タスクを更新しました。"
+      destroyed: "タスクを削除しました。"
     sessions:
       create_success: "ログインしました"
       create_failure: "メールアドレスまたはパスワードに誤りがあります"
