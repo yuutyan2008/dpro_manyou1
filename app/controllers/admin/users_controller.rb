@@ -22,7 +22,7 @@ module Admin
       if @user.save
         # 国際化（i18n）
         # ja.yml に定義したフラッシュメッセージに翻訳
-        flash[:notice] = t("flash.users.create")
+        flash[:notice] = t("flash.admin.create")
         # ユーザ登録に成功した場合の処理、user一覧画面に遷移
         redirect_to admin_users_path
       else
@@ -39,7 +39,7 @@ module Admin
       if @user.update(user_params)
         # 国際化（i18n）
         # ja.yml に定義したフラッシュメッセージに翻訳
-        flash[:notice] = t("flash.users.update")
+        flash[:notice] = t("flash.admin.update")
         redirect_to admin_users_path
       else
         redirect_to admin_users_path, alert: "管理者が0人になるため権限を変更できません"
@@ -52,7 +52,7 @@ module Admin
         @user.destroy
         # 国際化（i18n）
         # ja.yml に定義したフラッシュメッセージに翻訳
-        flash[:notice] = t("flash.users.destroy")
+        flash[:notice] = t("flash.admin.destroy")
       else
         redirect_to admin_users_path, alert: "管理者が0人になるため削除できません"
       end

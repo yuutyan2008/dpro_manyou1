@@ -114,6 +114,10 @@ ja:
   flash:
     users:
       create: "アカウントを登録しました"
+      update: "アカウントを更新しました"
+      destroy: "アカウントを削除しました"
+    admin:
+      create: "ユーザを登録しました"
       update: "ユーザを更新しました"
       destroy: "ユーザを削除しました"
     tasks:
