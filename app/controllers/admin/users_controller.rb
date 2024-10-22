@@ -44,26 +44,32 @@ module Admin
 
     def update
       @user = User.find(params[:id])
+      # binding.irb
       if @user.update(user_params)
         # 国際化（i18n）
         # ja.yml に定義したフラッシュメッセージに翻訳
         flash[:notice] = t("flash.admin.update")
         redirect_to admin_users_path
       else
-        redirect_to admin_users_path, alert: "管理者が0人になるため権限を変更できません"
+        redirect_to admin_users_path
       end
     end
 
+    # 管理者削除を防ぐロジックはmodelに記載
     def destroy
       @user = User.find(params[:id])
       if User.where(admin: true).count > 1 || !@user.admin?
         @user.destroy
+        # binding.irb
         # 国際化（i18n）
         # ja.yml に定義したフラッシュメッセージに翻訳
         flash[:notice] = t("flash.admin.destroy")
       else
-        redirect_to admin_users_path, alert: "管理者が0人になるため削除できません"
+        # バリデーションに失敗で@user.errors.full_messagesにエラーメッセージが配列として追加されます
+        # .join(", "): 配列内の全てのエラーメッセージをカンマ区切り（, ）で連結
+        flash[:alert] = @user.errors.full_messages.join(", ")
       end
+      redirect_to admin_users_path
     end
 
     private

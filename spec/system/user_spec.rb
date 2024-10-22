@@ -118,19 +118,32 @@ RSpec.describe "ユーザ管理機能", type: :system do
 
         visit edit_admin_user_path(admin2)
         fill_in "名前", with: "Updated User"
+        fill_in "メールアドレス", with: "login_user.email"
+        fill_in "パスワード", with: "login_user.password"
+
         click_button "更新する"
+
         expect(page).to have_content("ユーザを更新しました")
       end
 
       it "ユーザを削除できる" do
-        # log_in_as(admin)
+        # id = destroy-userを指定
         visit admin_users_path
-        click_link "削除", href: admin_user_path(user)
+        # 削除ボタンをクリックする前に確認ダイアログが表示される
+        page.accept_confirm do
+          # ユニークなIDで削除ボタンを見つけてクリック
+          find("#destroy-user-#{user.id}").click
+        end
+        # 削除後のページで、削除が成功したことを示すメッセージが表示されているか確認
         expect(page).to have_content("ユーザを削除しました")
+
+        # ユーザ一覧から削除されたことを確認
+        expect(User.where(id: user.id)).not_to exist
       end
     end
 
     context "一般ユーザがユーザ一覧画面にアクセスした場合" do
+      let(:login_user) { user }
       it "タスク一覧画面に遷移し、「管理者以外アクセスできません」というエラーメッセージが表示される" do
         # log_in_as(user)
         visit admin_users_path
