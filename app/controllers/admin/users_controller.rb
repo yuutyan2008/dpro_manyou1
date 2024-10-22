@@ -30,8 +30,16 @@ module Admin
       end
     end
 
+    # def edit
+    #   @user = User.find(params[:id])
+    # end
     def edit
-      @user = User.find(params[:id])
+      @user = User.find_by(id: params[:id])
+      if @user.nil?
+        Rails.logger.debug "ユーザーが見つかりません"
+        # もしくは以下のコードで例外を投げる
+        raise "ユーザーが見つかりません"
+      end
     end
 
     def update

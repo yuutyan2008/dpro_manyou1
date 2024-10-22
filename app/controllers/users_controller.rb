@@ -4,7 +4,10 @@ class UsersController < ApplicationController
   before_action :login_required, except: %i[new create]
 
   # 指定したアクションが呼ばれた際、correct_userメソッドを先に実行する
-  before_action :correct_user, only: %i[show edit update destroy]
+  # 管理者はすべての権限がある
+  before_action :correct_user,
+                only: %i[show edit update destroy],
+                unless: -> { current_user.admin? }
 
   # アカウント登録フォームを表示するための処理
   def new
@@ -84,12 +87,13 @@ class UsersController < ApplicationController
 
   # ログインしているユーザーがアクセス権限を持っているかどうかを確認するメソッド
   # ログイン済みでも他人のデータにアクセスしようとする不正な行為を防ぎます
+  # 管理者が他のユーザーの詳細ページにアクセスできるようにcurrent_user.admin?を追加
   def correct_user
     @user = User.find(params[:id])
     # パラメータのidを使ってデータベースからユーザを取り出し、current_user?メソッドの引数に渡すことで、アクセス先が本人のものか確認しています。
     # アクセスしているユーザーが本人でない場合、タスク一覧画面にリダイレクト
-    unless current_user?(@user)
-      flash[:notice] = t("flash.sessions.login_required")
+    unless current_user.admin? || current_user?(@user)
+      flash[:notice] = t("flash.admin.index")
       redirect_to tasks_path
     end
   end

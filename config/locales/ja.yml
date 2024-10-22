@@ -117,11 +117,11 @@ ja:
       update: "アカウントを更新しました"
       destroy: "アカウントを削除しました"
     admin:
+      index: "アクセス権限がありません"
       create: "ユーザを登録しました"
       update: "ユーザを更新しました"
       destroy: "ユーザを削除しました"
     tasks:
-      index: "アクセス権限がありません"
       created: "タスクを登録しました。"
       updated: "タスクを更新しました。"
       destroyed: "タスクを削除しました。"
