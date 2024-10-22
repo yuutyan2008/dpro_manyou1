@@ -128,7 +128,7 @@ RSpec.describe "タスクモデル機能", type: :model do
 
     context "scopeメソッドでタイトルのあいまい検索とステータス検索をした場合" do
       it "検索ワードをタイトルに含み、かつステータスに完全一致するタスクが絞り込まれる" do
-        binding.irb
+        # binding.irb
 
         expect(
           Task.search_by_title("first").search_by_status("not_started")

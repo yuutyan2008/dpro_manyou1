@@ -1,16 +1,14 @@
 class SessionsController < ApplicationController
   # 新規登録やログインページではログインが必須でないため、login_requiredをスキップ
-  skip_before_action :login_required, only: %i[new create]
+  before_action :login_required, except: %i[new create]
 
-  # ログイン中のユーザーがログインやアカウント登録のページにアクセスしようとした場合redirect_if_logged_inを実行
-  before_action :redirect_if_logged_in, only: %i[new create]
-
+  # ログインフォームを表示するための処理
   def new
     #セッションに関してはインスタンスの作成が必要ないので、newアクションには何も処理が入りません
     @user = User.new
   end
 
-  # Sessionsコントローラにセッションを作成する
+  # ログインリクエストを受信して実際にログインする
   def create
     puts params[:session][:email]
     #入力されたメールアドレスを元に、find_byメソッドを使ってデータベースからユーザを取り出す
@@ -38,7 +36,7 @@ class SessionsController < ApplicationController
     end
   end
 
-  # Sessionsコントローラにログアウトを行う
+  # DEEリクエストを受信してログアウトを行う
   def destroy
     session.delete(:user_id) # セッションオブジェクトからユーザIDを削除
 
@@ -53,15 +51,6 @@ class SessionsController < ApplicationController
     unless current_user
       flash[:alert] = "ログインしてください"
       redirect_to login_path
-    end
-  end
-
-  # ログイン中のユーザーがログインやアカウント登録のページにアクセスしようとした場合、
-  # タスク一覧画面にリダイレクトし、フラッシュメッセージを表示する
-  def redirect_if_logged_in
-    if logged_in?
-      flash[:alert] = I18n.t("flash.sessions.logout_required")
-      redirect_to tasks_path
     end
   end
 end

@@ -4,10 +4,20 @@ RSpec.describe "ユーザ管理機能", type: :system do
   describe "登録機能" do
     context "ユーザを登録した場合" do
       it "タスク一覧画面に遷移する" do
+        visit new_user_path
+        fill_in "Name", with: "Test User"
+        fill_in "Email", with: "test@example.com"
+        fill_in "Password", with: "password"
+        fill_in "Password confirmation", with: "password"
+        click_button "登録する"
+        expect(page).to have_content("タスク一覧ページ")
       end
     end
     context "ログインせずにタスク一覧画面に遷移した場合" do
       it "ログイン画面に遷移し、「ログインしてください」というメッセージが表示される" do
+        visit tasks_path
+        expect(current_path).to eq(new_session_path)
+        expect(page).to have_content("ログインしてください")
       end
     end
   end

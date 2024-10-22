@@ -1,11 +1,12 @@
 class UsersController < ApplicationController
   # ユーザーが未ログインの状態でアクセス可能なページを設定
   # ユーザー登録用のnewやcreateアクションではlogin_requiredメソッドが実行されないように設定
-  skip_before_action :login_required, only: %i[new create]
+  before_action :login_required, except: %i[new create]
 
   # 指定したアクションが呼ばれた際、correct_userメソッドを先に実行する
   before_action :correct_user, only: %i[show edit update destroy]
 
+  # アカウント登録フォームを表示するための処理
   def new
     #新しいUserモデルのインスタンスを作成し、登録フォームで使用できるようにします。
     @user = User.new
@@ -62,13 +63,16 @@ class UsersController < ApplicationController
 
   private
 
+  # 未ログインのユーザーを制限
   def login_required
     unless current_user
-      flash[:alert] = "ログインしてください"
+      flash[:notice] = t("flash.sessions.login_required")
       redirect_to new_session_path
     end
   end
 
+  # ストロングパラメータという仕組み
+  # paramsに入ったフォームの全データのうち、userモデルのpermit()で指定したカラムのみを取り出す
   def user_params
     params.require(:user).permit(
       :name,
@@ -78,11 +82,15 @@ class UsersController < ApplicationController
     )
   end
 
-  # 本人しか各画面にアクセスできないよう制限を追加
+  # ログインしているユーザーがアクセス権限を持っているかどうかを確認するメソッド
+  # ログイン済みでも他人のデータにアクセスしようとする不正な行為を防ぎます
   def correct_user
     @user = User.find(params[:id])
     # パラメータのidを使ってデータベースからユーザを取り出し、current_user?メソッドの引数に渡すことで、アクセス先が本人のものか確認しています。
-    # 本人ではなかった場合、そのユーザの詳細画面に遷移させます。
-    redirect_to new_session_path
+    # アクセスしているユーザーが本人でない場合、タスク一覧画面にリダイレクト
+    unless current_user?(@user)
+      flash[:notice] = t("flash.sessions.login_required")
+      redirect_to tasks_path
+    end
   end
 end
