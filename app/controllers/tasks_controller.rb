@@ -103,7 +103,7 @@ class TasksController < ApplicationController
   def correct_user
     @task = current_user.tasks.find_by(id: params[:id])
     unless @task
-      flash[:alert] = I18n.t("flash.tasks.index")
+      flash[:alert] = I18n.t("flash.admin.index")
       redirect_to tasks_path
     end
   end
