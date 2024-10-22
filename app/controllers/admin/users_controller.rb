@@ -44,14 +44,18 @@ module Admin
 
     def update
       @user = User.find(params[:id])
-      # binding.irb
+
       if @user.update(user_params)
         # 国際化（i18n）
         # ja.yml に定義したフラッシュメッセージに翻訳
+        # binding.irb
         flash[:notice] = t("flash.admin.update")
+        # binding.irb
+
         redirect_to admin_users_path
       else
-        redirect_to admin_users_path
+        flash.now[:alert] = @user.errors.full_messages.join(", ") # エラーメッセージを追加
+        render :edit
       end
     end
 
@@ -60,9 +64,10 @@ module Admin
       @user = User.find(params[:id])
       if User.where(admin: true).count > 1 || !@user.admin?
         @user.destroy
-        # binding.irb
+
         # 国際化（i18n）
         # ja.yml に定義したフラッシュメッセージに翻訳
+
         flash[:notice] = t("flash.admin.destroy")
       else
         # バリデーションに失敗で@user.errors.full_messagesにエラーメッセージが配列として追加されます

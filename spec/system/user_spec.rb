@@ -118,17 +118,20 @@ RSpec.describe "ユーザ管理機能", type: :system do
 
         visit edit_admin_user_path(admin2)
         fill_in "名前", with: "Updated User"
-        fill_in "メールアドレス", with: "login_user.email"
-        fill_in "パスワード", with: "login_user.password"
-
+        # binding.irb
+        fill_in "メールアドレス", with: "admin2@example.com" # 編集対象のユーザ情報を使用
+        fill_in "パスワード", with: "password" # 任意のパスワードを入力
+        fill_in "パスワード（確認）", with: "password"
         click_button "更新する"
 
+        # binding.irb
         expect(page).to have_content("ユーザを更新しました")
       end
 
       it "ユーザを削除できる" do
         # id = destroy-userを指定
         visit admin_users_path
+
         # 削除ボタンをクリックする前に確認ダイアログが表示される
         page.accept_confirm do
           # ユニークなIDで削除ボタンを見つけてクリック
