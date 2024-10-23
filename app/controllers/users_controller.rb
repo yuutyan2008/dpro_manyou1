@@ -43,9 +43,11 @@ class UsersController < ApplicationController
   #登録フォームの入力値は、ストロングパラメータparamsを使って取得
 
   def edit
+    @user = User.find(params[:id])
   end
 
   def update
+    @user = User.find(params[:id])
     if @user.update(user_params)
       # 国際化（i18n）
       # ja.yml に定義したフラッシュメッセージに翻訳
@@ -57,10 +59,16 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user.destroy
-    # 国際化（i18n）
-    # ja.yml に定義したフラッシュメッセージに翻訳
-    flash[:notice] = t("flash.users.destroy")
+    @user = User.find(params[:id])
+    if @user.destroy
+      # ココ(削除実行直前)でmodelに定義したコールバックが呼ばれる
+
+      flash[:notice] = t("flash.admin.destroy")
+    else
+      # バリデーションに失敗で@user.errors.full_messagesにエラーメッセージが配列として追加されます
+      # .join(", "): 配列内の全てのエラーメッセージをカンマ区切り（, ）で連結
+      flash[:alert] = @user.errors.full_messages.join(", ")
+    end
     redirect_to root_path
   end
 
