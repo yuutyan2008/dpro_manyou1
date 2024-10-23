@@ -59,14 +59,12 @@ module Admin
       end
     end
 
-    # 管理者削除を防ぐロジックはmodelに記載
+    # 削除処理の開始し管理者削除を防ぐロジックはmodelで行う
     def destroy
+      # binding.irb
       @user = User.find(params[:id])
-      if User.where(admin: true).count > 1 || !@user.admin?
-        @user.destroy
-
-        # 国際化（i18n）
-        # ja.yml に定義したフラッシュメッセージに翻訳
+      if @user.destroy
+        # ココ(削除実行直前)でmodelに定義したコールバックが呼ばれる
 
         flash[:notice] = t("flash.admin.destroy")
       else

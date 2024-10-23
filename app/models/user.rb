@@ -23,6 +23,7 @@ class User < ApplicationRecord
   has_many :tasks, dependent: :destroy
 
   # 管理者が1人しかいない状態でそのユーザを削除できないようにする
+  # if: -> { admin? } :管理者 (admin == true) のみで実行
   before_destroy :ensure_an_admin_remains, if: -> { admin? }
   # 管理者が1人しかいない状態で管理者権限を外せないようにする
   before_update :ensure_an_admin_remains_on_update,
@@ -34,7 +35,7 @@ class User < ApplicationRecord
   def ensure_an_admin_remains
     if User.where(admin: true).count == 1
       errors.add(:base, "管理者が0人になるため削除できません")
-      throw(:abort)
+      throw(:abort) # 削除を中断
     end
   end
 
