@@ -135,7 +135,7 @@ RSpec.describe "ユーザ管理機能", type: :system do
         # 削除ボタンをクリックする前に確認ダイアログが表示される
         page.accept_confirm do
           # ユニークなIDで削除ボタンを見つけてクリック
-          find("#destroy-user-#{user.id}").click
+          all(".destroy-user")[0].click
         end
         # 削除後のページで、削除が成功したことを示すメッセージが表示されているか確認
         expect(page).to have_content("ユーザを削除しました")
