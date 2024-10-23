@@ -18,14 +18,28 @@
   <%# グローバルナビゲーションの作成 %>
   <header>
     <nav>
-      <%# Tasks Index %>
+      <% if logged_in? %>
+      <%# ログイン済みの場合のメニュー %>
       <ul>
-        <li><%= link_to t('tasks.index.links.tasks_index'), tasks_path, id: "tasks-index" %></li>
+        <%# 管理者専用メニュー %>
+        <% if current_user.admin? %>
+        <li><%= link_to "ユーザ一覧", admin_users_path, id: "users-index" %></li>
+        <li><%= link_to "ユーザを登録する", new_admin_user_path, id: "add-user" %></li>
+        <% end %>
+
+        <li><%= link_to "タスク一覧", tasks_path, id: "tasks-index" %></li>
+        <li><%= link_to "タスクを登録する", new_task_path, id: "new-task" %></li>
+        <li><%= link_to "アカウント設定", user_path(current_user), id: "account-setting" %></li>
+
+        <li><%= link_to "ログアウト", session_path(current_user), method: :delete, id: "sign-out" %></li>
       </ul>
-      <%# New Task %>
+      <% else %>
+      <%# 未ログインの場合のメニュー %>
       <ul>
-        <li><%= link_to t('tasks.index.links.new_task'), new_task_path, id: "new-task" %></li>
+        <li><%= link_to "アカウント登録", new_user_path, id: "sign-up" %></li>
+        <li><%= link_to "ログイン", new_session_path, id: "sign-in" %></li>
       </ul>
+      <% end %>
     </nav>
   </header>
   <%= yield %>

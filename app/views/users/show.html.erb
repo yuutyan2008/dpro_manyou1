@@ -1,0 +1,8 @@
+<h1><%= t('view.users.show.title') %></h1>
+<p><strong><%= t('activerecord.attributes.user.name') %>: </strong><%= @user.name %></p>
+<p><strong><%= t('activerecord.attributes.user.email') %>: </strong><%= @user.email %></p>
+
+<% if current_user == @user %>
+<%= link_to t('common.edit'), edit_user_path(@user), class: "btn btn-primary", id: "edit-user"  %>
+<%= link_to t('common.destroy'), user_path(@user), method: :delete, data: {confirm: t('flash.common.confirm_destroy') }, class: "btn btn-danger" %>
+<% end %>

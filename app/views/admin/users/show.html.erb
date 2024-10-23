@@ -1,0 +1,44 @@
+<h1><%= t('view.users.admin.show.title') %></h1>
+
+<p>
+  <strong><%= t('activerecord.attributes.user.name') %>:</strong>
+  <%= @user.name %>
+</p>
+
+<p>
+  <strong><%= t('activerecord.attributes.user.email') %>:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong><%= t('activerecord.attributes.user.admin') %>:</strong>
+  <%= @user.admin? ? 'あり' : 'なし' %>
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= Task.human_attribute_name(:title) %></th>
+      <th><%= Task.human_attribute_name(:content) %></th>
+      <th><%= Task.human_attribute_name(:created_at) %></th>
+      <th><%= Task.human_attribute_name(:deadline_on) %></th>
+      <th><%= Task.human_attribute_name(:priority) %></th>
+      <th><%= Task.human_attribute_name(:status) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @user.tasks.each do |task| %>
+    <tr>
+      <td><%= task.title %></td>
+      <td><%= task.content %></td>
+      <td class="task-created_at"><%= task.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+      <td class="deadline_on"><%= task.deadline_on.strftime("%Y-%m-%d") %></td>
+      <!-- 優先度の enum の表示 -->
+      <td><%= I18n.t("activerecord.enums.task.priority.#{task.priority}") %></td>
+      <td><%= I18n.t("activerecord.enums.task.status.#{task.status}") %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to t('common.back'), admin_users_path, id: 'back' %>
