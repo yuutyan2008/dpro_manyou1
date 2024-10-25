@@ -26,6 +26,16 @@
 </p>
 
 <p>
+  <strong><%= Task.human_attribute_name(:label) %>:</strong>
+  <% if @task.labels.any? %>
+  <%= @task.labels.map(&:name).join(', ') %>
+  <% else %>
+  <%= t('view.tasks.no_labels') %>
+  <!-- ラベルがない場合のメッセージ -->
+  <% end %>
+</p>
+
+<p>
   <strong><%= Task.human_attribute_name(:created_at) %>:</strong>
   <%= @task.created_at %>
 </p>

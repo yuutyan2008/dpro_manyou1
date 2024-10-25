@@ -17,4 +17,12 @@ Rails.application.routes.draw do
   # ログイン機能のSessionsコントローラ用のルーティング
   # destroyはSessionsコントローラにログアウトを行うためのdestroyアクション
   resources :sessions, only: %i[new create destroy]
+
+  # ラベルに関するルーティング
+  resources :labels, only: %i[index new edit create update destroy]
+
+  # 一番最後
+  # どのルーティングにも一致しない場合ApplicationContollerのrouting_errorアクションを実行
+  get "*not_found" => "application#routing_error"
+  post "*not_found" => "application#routing_error"
 end

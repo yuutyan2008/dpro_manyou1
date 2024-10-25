@@ -1,0 +1,10 @@
+<%= form_with model: label, url: url, local: true, method: method do |f| %>
+<div class="field">
+  <%= f.label :name, '名前' %><br>
+  <%= f.text_field :name, id: 'label-name' %>
+</div>
+
+<div class="actions">
+  <%= f.submit button_label, id: 'submit-button' %>
+</div>
+<% end %>

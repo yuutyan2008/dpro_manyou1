@@ -1,0 +1,23 @@
+<h1>ラベル一覧ページ</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>名前</th>
+            <th>タスク数</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @labels.each do |label| %>
+        <tr>
+            <td><%= label.name %></td>
+            <td><%= label.tasks.count %></td>
+            <td>
+                <%= link_to '編集', edit_label_path(label), class: 'edit-label' %> |
+                <%= link_to '削除', label_path(label), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'destroy-label' %>
+            </td>
+        </tr>
+        <% end %>
+    </tbody>
+</table>

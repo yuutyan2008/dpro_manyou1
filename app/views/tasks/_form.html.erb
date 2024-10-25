@@ -1,8 +1,8 @@
 <%= form_with(model: task, local: true) do |form| %>
 
 <% if task.errors.any? %>
-<div id="error_explanation">
-  <h2><%= t('activerecord.errors.models.task.prohibited', count: task.errors.count) %></h2>
+<div id="error_explanation" class="alert alert-danger">
+  <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
 
   <ul>
     <% task.errors.full_messages.each do |message| %>
@@ -12,40 +12,45 @@
 </div>
 <% end %>
 
-<div class="field">
+<div class="form-group">
   <%= form.label :title %>
-  <%= form.text_field :title %>
+  <%= form.text_field :title, class: "form-control" %>
 </div>
 
-<div class="field">
+<div class="form-group">
   <%= form.label :content %>
-  <%= form.text_area :content %>
+  <%= form.text_area :content, class: "form-control" %>
 </div>
 
-<div class="field">
+<div class="form-group">
   <%= form.label :deadline_on %>
-  <%= form.date_field :deadline_on, min: Date.current %>
+  <%= form.date_field :deadline_on, min: Date.current, class: "form-control" %>
 </div>
 
-<div class="field">
+<div class="form-group">
   <%= form.label :priority %>
-  <%= form.select :priority, options_for_select([
-    [t('helpers.tasks/priority.low'), 'low'],
-    [t('helpers.tasks/priority.middle'), 'middle'],
-    [t('helpers.tasks/priority.high'), 'high']
-  ]), { include_blank: true } %>
+  <%= form.select :priority, options_for_select([['低', 'low'], ['中', 'middle'], ['高', 'high']], task.priority), { include_blank: true }, class: "form-control" %>
 </div>
 
-<div class="field">
+<div class="form-group">
   <%= form.label :status %>
-  <%= form.select :status, options_for_select([
-    [t('helpers.tasks/status.not_started'), 'not_started'],
-    [t('helpers.tasks/status.under_way'), 'under_way'],
-    [t('helpers.tasks/status.completed'), 'completed']
-  ]), { include_blank: true } %>
+  <%= form.select :status, options_for_select([['未着手', 'not_started'], ['着手中', 'under_way'], ['完了', 'completed']], task.status), { include_blank: true }, class: "form-control" %>
 </div>
 
-<div class="actions">
-  <%= form.submit t('helpers.submit.create'), id: 'create-task' %>
+<%# labelの選択機能を追加 %>
+<div class="form-group">
+  <%= form.label :labels, 'ラベル' %>
+  <% Label.all.each do |label| %>
+  <div class="form-check">
+    <%= form.check_box :label_ids, { multiple: true, include_hidden: false, class: "form-check-input" }, label[:id], nil %>
+
+    <%= form.label "label_ids_#{label.id}", label.name, class: "form-check-label" %>
+  </div>
+  <% end %>
 </div>
+
+<div class="form-group">
+  <%= form.submit t('helpers.submit.create'), class: "btn btn-primary", id: 'create-task' %>
+</div>
+
 <% end %>

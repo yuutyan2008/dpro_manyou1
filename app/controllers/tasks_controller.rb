@@ -9,16 +9,22 @@ class TasksController < ApplicationController
   before_action :search_params, only: %i[show edit update destroy]
 
   def index
-    # dログインしているユーザーのタスクのみ表示
+    # puts current_user.inspect # デバッグ用
+    puts current_user.tasks.inspect # デバッグ用
+    # @tasks = current_user.tasksで検索対象のデータ全体を取得
     @tasks = current_user.tasks
+    puts "Current user's tasks: #{@tasks.inspect}" # @tasksの内容をログに表示
+    # binding.irb
     # 検索パラメータの初期化
     # earch_paramsメソッドで許可した値のみ取得して@search_paramsに格納
     @search_params = search_params
-    # 検索機能（スコープを適用）
+
+    # 検索の実行（スコープを適用）
     @tasks =
-      @tasks.search_by_title(@search_params[:title]).search_by_status(
-        @search_params[:status]
-      )
+      @tasks
+        .search_by_title(@search_params[:title])
+        .search_by_status(@search_params[:status])
+        .search_by_label(@search_params[:label_id])
 
     # puts @search_params.inspect #コンソールでエラー原因の確認に使用
 
@@ -87,16 +93,15 @@ class TasksController < ApplicationController
       :content,
       :deadline_on,
       :priority,
-      :status
+      :status,
+      :label_id
     )
   end
 
   # ストロングパラメータの設定
-  # このメソッドを追加して、search パラメータ内の title と status だけを許可します。
+  # このメソッドを追加して、search パラメータ内の title と status label_idだけを許可します。
   def search_params
-    # search パラメータが存在することを確認し、その中で title と status だけを許可します。
-    # :search パラメータが存在しない場合に、空のハッシュ {} を返す
-    params.fetch(:search, {}).permit(:title, :status)
+    params.permit(:title, :status, :label_id)
   end
 
   # 他人のタスク詳細画面や編集画面にアクセスしようとした場合、タスク一覧画面にリダイレクト

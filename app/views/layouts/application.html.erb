@@ -5,44 +5,57 @@
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
-  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <!-- Webpacker を使ったスタイルシートの読み込み -->
+  <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+  <!-- JavaScript ファイルの読み込み -->
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 </head>
 
 <body>
-  <%# Flashメッセージをヘッダーに表示させる %>
+  <%# Flashメッセージのデザインを Bootstrap の alert クラスで適用 %>
   <% flash.each do |key, value| %>
-  <%= content_tag(:div, value, class: "#{key}") %>
+  <div class="alert alert-<%= key %> alert-dismissible fade show" role="alert">
+    <%= value %>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
   <% end %>
 
   <%# グローバルナビゲーションの作成 %>
-  <header>
-    <nav>
-      <% if logged_in? %>
-      <%# ログイン済みの場合のメニュー %>
-      <ul>
-        <%# 管理者専用メニュー %>
+  <%# Bootstrap を使ったグローバルナビゲーション %>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Task App</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <% if logged_in? %>
         <% if current_user.admin? %>
-        <li><%= link_to "ユーザ一覧", admin_users_path, id: "users-index" %></li>
-        <li><%= link_to "ユーザを登録する", new_admin_user_path, id: "add-user" %></li>
+        <li class="nav-item"><%= link_to "ユーザ一覧", admin_users_path, class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to "ユーザを登録する", new_admin_user_path, class: "nav-link" %></li>
         <% end %>
-
-        <li><%= link_to "タスク一覧", tasks_path, id: "tasks-index" %></li>
-        <li><%= link_to "タスクを登録する", new_task_path, id: "new-task" %></li>
-        <li><%= link_to "アカウント設定", user_path(current_user), id: "account-setting" %></li>
-
-        <li><%= link_to "ログアウト", session_path(current_user), method: :delete, id: "sign-out" %></li>
+        <li class="nav-item"><%= link_to "タスク一覧", tasks_path, class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to "タスクを登録する", new_task_path, class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to "ラベル一覧", labels_path, class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to "ラベルを登録する", new_label_path, class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to "アカウント設定", user_path(current_user), class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to "ログアウト", session_path(current_user), method: :delete, class: "nav-link" %></li>
+        <% else %>
+        <li class="nav-item"><%= link_to "アカウント登録", new_user_path, class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to "ログイン", new_session_path, class: "nav-link" %></li>
+        <% end %>
       </ul>
-      <% else %>
-      <%# 未ログインの場合のメニュー %>
-      <ul>
-        <li><%= link_to "アカウント登録", new_user_path, id: "sign-up" %></li>
-        <li><%= link_to "ログイン", new_session_path, id: "sign-in" %></li>
-      </ul>
-      <% end %>
-    </nav>
-  </header>
-  <%= yield %>
+    </div>
+  </nav>
+
+  <%# グローバルナビゲーションとフラッシュメーセージ以外の要素にcontainerセレクタを適用 %>
+  <div class="container">
+    <%= yield %>
+  </div>
 </body>
 
 </html>

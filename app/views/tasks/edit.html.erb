@@ -1,50 +1,5 @@
 <h1><%= t('view.tasks.edit.title') %></h1>
 
-<%# フォームが表示される前にエラーメッセージを表示するためform_withの前に書く %>
-<% if @task.errors.any? %>
+<%= render 'form', task: @task, button_label: t('helpers.submit.update'), id: 'update-task' %>
 
-<%# Railsがデフォルトで用意しているエラー用のスタイル（CSS）を適用 %>
-<div id="error_explanation">
-  <h2><%= t('activerecord.errors.models.user.prohibited', count: @user.errors.count) %></h2>
-  <ul>
-    <% @task.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-    <% end %>
-  </ul>
-</div>
-<% end %>
-
-
-<%= form_with(model: @task, local: true) do |form| %>
-<div class="field">
-  <%= form.label :title, Task.human_attribute_name(:title) %>
-  <%= form.text_field :title %>
-</div>
-
-<div class="field">
-  <%= form.label :content, Task.human_attribute_name(:content) %>
-  <%= form.text_area :content %>
-</div>
-
-<div class="field">
-  <%= form.label :deadline_on %>
-  <%= form.date_field :deadline_on, min: Date.current %>
-</div>
-
-<div class="field">
-  <%= form.label :priority %>
-  <%= form.select :priority, options_for_select([['低', 'low'], ['中', 'middle'], ['高', 'high']], @task.priority) %>
-</div>
-
-<div class="field">
-  <%= form.label :status %>
-  <%= form.select :status, options_for_select([['未着手', 'not_started'], ['着手中', 'under_way'], ['完了', 'completed']], @task.status)  %>
-</div>
-
-<div class="actions">
-  <%= form.submit t('helpers.submit.update'), id: 'update-task' %>
-</div>
-
-<% end %>
-
-<%= link_to t('common.back'), tasks_path(@task), id: 'back' %>
+<%= link_to t('common.back'), tasks_path, id: 'back' %>
