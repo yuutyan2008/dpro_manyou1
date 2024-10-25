@@ -81,6 +81,9 @@ ja:
         password_confirmation: "パスワード（確認）"
         admin: "管理者権限"
         task_num: "タスク数"
+      label:
+        name: "名前"
+
     enums:
       task:
         priority:

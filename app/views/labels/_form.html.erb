@@ -1,10 +1,10 @@
 <%= form_with model: label, url: url, local: true, method: method do |f| %>
 <div class="field">
-  <%= f.label :name, '名前' %><br>
-  <%= f.text_field :name, id: 'label-name' %>
+  <%= f.label :name, t('activerecord.attributes.label.name'), for: 'label_name' %><br>
+  <%= f.text_field :name, id: 'label_name' %>
 </div>
 
 <div class="actions">
-  <%= f.submit button_label, id: 'submit-button' %>
+  <%= f.submit t('helpers.submit.create'), id: 'submit-button' %>
 </div>
 <% end %>

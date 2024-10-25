@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :label do
     name { "重要" }
+    association :user # ユーザーとの関連付けを追加
   end
 
   factory :third_task do
@@ -16,7 +17,9 @@ FactoryBot.define do
     # このトレイトを使うと、タスクにラベルが関連付けられる
     # FactoryBot.create(:label) でラベルを1つ作成し、そのラベルを task.labels << でタスクに追加
     trait :with_labels do
-      after(:build) { |task| task.labels << FactoryBot.create(:label) }
+      after(:create) do |task|
+        task.labels << FactoryBot.create(:label, user: task.user) # ラベルをタスクに追加し、ユーザーを関連付ける
+      end
     end
   end
 end

@@ -9,10 +9,12 @@ class LabelsController < ApplicationController
   end
 
   def create
-    @label = Label.new(label_params)
+    # labelテーブルのuser_idは必須のためLabelとuser_idを関連付けて保存
+    @label = current_user.labels.new(label_params)
     if @label.save
       redirect_to labels_path, notice: "ラベルが作成されました。"
     else
+      puts @label.errors.full_messages # デバッグ用のエラーメッセージ表示
       render :new
     end
   end

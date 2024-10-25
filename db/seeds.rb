@@ -33,9 +33,14 @@ User.create!(
   admin: true # 管理者ユーザー
 )
 
-# ラベルのサンプルデータを作成
+# ラベルのサンプルデータを作成 (ユーザーに関連付け)
 labels = %w[Urgent Important Optional Home Work]
-labels.each { |label_name| Label.create!(name: label_name) }
+labels.each do |label_name|
+  Label.create!(
+    name: label_name,
+    user: User.all.sample # ランダムなユーザーを関連付け
+  )
+end
 
 # 50件のタスクデータを作成
 50.times do |n|
