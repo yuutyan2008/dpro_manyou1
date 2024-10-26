@@ -53,6 +53,7 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
+    @labels = current_user.labels # ログイン中のユーザが作成したラベルのみ取得
   end
 
   def create
@@ -68,6 +69,7 @@ class TasksController < ApplicationController
 
   def edit
     @task = Task.find(params[:id])
+    @labels = current_user.labels # ログイン中のユーザが作成したラベルのみ取得
   end
 
   def update

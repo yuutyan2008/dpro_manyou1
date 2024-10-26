@@ -13,8 +13,8 @@
             <td><%= label.name %></td>
             <td><%= label.tasks.count %></td>
             <td>
-                <%= link_to '編集', edit_label_path(label), class: 'edit-label' %> |
-                <%= link_to '削除', label_path(label), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'destroy-label' %>
+                <%= link_to t('common.edit'), edit_label_path(label), class: 'edit-label' %> |
+                <%= link_to t('common.destroy'), label_path(label), method: :delete, data: { confirm: t('common.confirm_destroy') }, class: 'destroy-label' %>
             </td>
         </tr>
         <% end %>

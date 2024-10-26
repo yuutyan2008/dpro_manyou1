@@ -10,7 +10,7 @@ class LabelsController < ApplicationController
 
   def create
     # labelテーブルのuser_idは必須のためLabelとuser_idを関連付けて保存
-    @label = current_user.labels.new(label_params)
+    @label = current_user.labels.build(label_params)
     if @label.save
       redirect_to labels_path
       flash[:notice] = t("flash.labels.created")

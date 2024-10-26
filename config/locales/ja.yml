@@ -28,6 +28,15 @@ ja:
           title: "ユーザ一覧ページ"
         show:
           title: "ユーザ詳細ページ"
+    labels:
+      new:
+        title: "ラベル登録ページ"
+      edit:
+        title: "ラベル編集ページ"
+      index:
+        title: "ラベル一覧ページ"
+      show:
+        title: "ラベル詳細ページ"
 
   activerecord:
     errors:
@@ -48,18 +57,23 @@ ja:
 
         task:
           prohibited: "%{count}件のエラーにより、このタスクは保存されませんでした。"
-          # user:
+          attributes:
+            title:
+              blank: "を入力してください"
+            content:
+              blank: "を入力してください"
+            created_at:
+              blank: "を入力してください"
+            deadline_on:
+              blank: "を入力してください"
+            priority:
+              blank: "を入力してください"
+            status:
+              blank: "を入力してください"
+        label:
           attributes:
             name:
-              blank: "名前を入力してください"
-            email:
-              blank: "メールアドレスを入力してください"
-              taken: "メールアドレスはすでに使用されています"
-            password:
-              blank: "パスワードを入力してください"
-              too_short: "パスワードは6文字以上で入力してください"
-            password_confirmation:
-              confirmation: "パスワード（確認）とパスワードの入力が一致しません"
+              blank: "を入力してください"
 
     # モデル名
     models:

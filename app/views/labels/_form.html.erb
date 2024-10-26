@@ -1,4 +1,17 @@
 <%= form_with model: label, url: url, local: true, method: method do |f| %>
+
+<%# validationメッセージ %>
+<% if label.errors.any? %>
+<div id="error_explanation" class="alert alert-danger">
+  <h2><%= pluralize(label.errors.count, "エラー") %>が発生しました:</h2>
+  <ul>
+    <% label.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
 <div class="field">
   <%= f.label :name, t('activerecord.attributes.label.name'), for: 'label_name' %><br>
   <%= f.text_field :name, id: 'label_name' %>

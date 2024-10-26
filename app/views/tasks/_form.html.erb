@@ -1,5 +1,6 @@
 <%= form_with(model: task, local: true) do |form| %>
 
+<%# validationメッセージ %>
 <% if task.errors.any? %>
 <div id="error_explanation" class="alert alert-danger">
   <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
@@ -39,11 +40,10 @@
 
 <%# labelの選択機能を追加 %>
 <div class="form-group">
-  <%= form.label :labels, 'ラベル' %>
-  <% Label.all.each do |label| %>
+  <%= form.label :labels %>
+  <% @labels.each do |label| %> <%# 現在のユーザのラベルのみを表示 %>
   <div class="form-check">
     <%= form.check_box :label_ids, { multiple: true, include_hidden: false, class: "form-check-input" }, label[:id], nil %>
-
     <%= form.label "label_ids_#{label.id}", label.name, class: "form-check-label" %>
   </div>
   <% end %>
