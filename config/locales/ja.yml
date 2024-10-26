@@ -82,6 +82,7 @@ ja:
         admin: "管理者権限"
         task_num: "タスク数"
       label:
+        # name: "ラベル"
         name: "名前"
 
     enums:
@@ -116,24 +117,28 @@ ja:
       update: 更新する
   flash:
     users:
-      create: "アカウントを登録しました"
-      update: "アカウントを更新しました"
-      destroy: "アカウントを削除しました"
+      created: "アカウントを登録しました"
+      updated: "アカウントを更新しました"
+      destroyed: "アカウントを削除しました"
     admin:
       index: "アクセス権限がありません"
-      create: "ユーザを登録しました"
-      update: "ユーザを更新しました"
-      destroy: "ユーザを削除しました"
+      created: "ユーザを登録しました"
+      updateed: "ユーザを更新しました"
+      destroyed: "ユーザを削除しました"
     tasks:
-      created: "タスクを登録しました。"
-      updated: "タスクを更新しました。"
-      destroyed: "タスクを削除しました。"
+      created: "タスクを登録しました"
+      updated: "タスクを更新しました"
+      destroyed: "タスクを削除しました"
     sessions:
       create_success: "ログインしました"
       create_failure: "メールアドレスまたはパスワードに誤りがあります"
       destroy: "ログアウトしました"
       login_required: "ログインしてください"
       logout_required: "ログアウトしてください"
+    labels:
+      created: "ラベルを登録しました"
+      updated: "ラベルを更新しました"
+      destroyed: "ラベルを削除しました"
 
   # 複数サイトの共通設定をココに書く
   common:

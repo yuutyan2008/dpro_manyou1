@@ -12,7 +12,8 @@ class LabelsController < ApplicationController
     # labelテーブルのuser_idは必須のためLabelとuser_idを関連付けて保存
     @label = current_user.labels.new(label_params)
     if @label.save
-      redirect_to labels_path, notice: "ラベルが作成されました。"
+      redirect_to labels_path
+      flash[:notice] = t("flash.labels.created")
     else
       puts @label.errors.full_messages # デバッグ用のエラーメッセージ表示
       render :new
@@ -26,7 +27,8 @@ class LabelsController < ApplicationController
   def update
     @label = Label.find(params[:id])
     if @label.update(label_params)
-      redirect_to labels_path, notice: "ラベルが更新されました。"
+      redirect_to labels_path
+      flash[:notice] = t("flash.labels.updated")
     else
       render :edit
     end
@@ -35,7 +37,8 @@ class LabelsController < ApplicationController
   def destroy
     @label = Label.find(params[:id])
     @label.destroy
-    redirect_to labels_path, notice: "ラベルを削除しました。"
+    redirect_to labels_path
+    flash[:notice] = t("flash.labels.destroyed")
   end
 
   private

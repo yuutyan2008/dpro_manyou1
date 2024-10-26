@@ -1,5 +1,6 @@
 <h1><%= t('view.tasks.edit.title') %></h1>
 
+<%# button_label に "更新する" を渡す %>
 <%= render 'form', task: @task, button_label: t('helpers.submit.update'), id: 'update-task' %>
 
 <%= link_to t('common.back'), tasks_path, id: 'back' %>

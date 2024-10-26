@@ -13,7 +13,7 @@
 </div>
 
 <div class="form-group mx-sm-3 mb-2">
-  <%= form.label :label_id, 'ラベル' %>
+  <%= form.label :label_id, t('activerecord.attributes.label.name') %>
   <%= form.select :label_id, Label.all.collect { |label| [label.name, label.id] }, include_blank: true, selected: params[:label_id], class: "form-control" %>
 </div>
 
@@ -46,7 +46,7 @@
       <td><%= link_to t('common.show'), task, class: 'btn btn-info' %></td>
       <td><%= link_to t('common.edit'), edit_task_path(task), class: 'btn btn-info' %></td>
       <td>
-        <%= link_to t('common.destroy'), task, method: :delete, data: { confirm: t('tasks.index.links.confirm_destroy') }, class: 'btn btn-outline-danger' %>
+        <%= link_to t('common.destroy'), task, method: :delete, data: { confirm: t('common.confirm_destroy') }, class: 'btn btn-outline-danger' %>
       </td>
     </tr>
     <% end %>

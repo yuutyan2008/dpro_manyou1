@@ -59,7 +59,7 @@ class TasksController < ApplicationController
     # current_userはusercontrollerで設定、ログイン中のuser_idでuser情報を取得
     @task = current_user.tasks.build(task_params)
     if @task.save
-      redirect_to tasks_path, notice: t("flash.create.success")
+      redirect_to tasks_path, notice: t("flash.tasks.created")
     else
       Rails.logger.info @task.errors.full_messages.to_sentence # エラー内容をログに出力
       render :new
@@ -73,7 +73,7 @@ class TasksController < ApplicationController
   def update
     @task = Task.find(params[:id])
     if @task.update(task_params)
-      redirect_to task_path(@task), notice: t("flash.update.success")
+      redirect_to task_path(@task), notice: t("flash.tasks.updated")
     else
       render :edit
     end
@@ -82,7 +82,7 @@ class TasksController < ApplicationController
   def destroy
     @task = Task.find(params[:id])
     @task.destroy
-    redirect_to tasks_path, notice: t("flash.destroy.success")
+    redirect_to tasks_path, notice: t("flash.tasks.destroyed")
   end
 
   private
