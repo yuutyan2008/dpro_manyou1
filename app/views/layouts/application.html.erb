@@ -40,8 +40,8 @@
         <% end %>
         <li class="nav-item"><%= link_to "タスク一覧", tasks_path, class: "nav-link" %></li>
         <li class="nav-item"><%= link_to "タスクを登録する", new_task_path, class: "nav-link" %></li>
-        <li class="nav-item"><%= link_to "ラベル一覧", labels_path, class: "nav-link" %></li>
-        <li class="nav-item"><%= link_to "ラベルを登録する", new_label_path, class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to "ラベル一覧", labels_path, class: "nav-link", id: "labels-index" %></li>
+        <li class="nav-item"><%= link_to "ラベルを登録する", new_label_path, class: "nav-link", id: "	new-label" %></li>
         <li class="nav-item"><%= link_to "アカウント設定", user_path(current_user), class: "nav-link" %></li>
         <li class="nav-item"><%= link_to "ログアウト", session_path(current_user), method: :delete, class: "nav-link" %></li>
         <% else %>

@@ -3,7 +3,7 @@
 <%# validationメッセージ %>
 <% if task.errors.any? %>
 <div id="error_explanation" class="alert alert-danger">
-  <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
+  <h2><%= pluralize(task.errors.count, "エラー") %>が発生しました:</h2>
 
   <ul>
     <% task.errors.full_messages.each do |message| %>
@@ -40,7 +40,7 @@
 
 <%# labelの選択機能を追加 %>
 <div class="form-group">
-  <%= form.label :labels %>
+  <%= form.label :labels, t('activerecord.attributes.label.label') %>
   <% @labels.each do |label| %> <%# 現在のユーザのラベルのみを表示 %>
   <div class="form-check">
     <%= form.check_box :label_ids, { multiple: true, include_hidden: false, class: "form-check-input" }, label[:id], nil %>

@@ -78,6 +78,7 @@ ja:
     # モデル名
     models:
       task:
+      label: "ラベル"
     # modelの属性名だけココに書き、属性に設定する値は同じ階層に別記する
     attributes:
       # activerecord.attributesの下のmodel名は単数形
@@ -96,7 +97,7 @@ ja:
         admin: "管理者権限"
         task_num: "タスク数"
       label:
-        # name: "ラベル"
+        label: "ラベル"
         name: "名前"
 
     enums:
