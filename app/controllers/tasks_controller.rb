@@ -86,6 +86,8 @@ class TasksController < ApplicationController
 
   def destroy
     # @task = Task.find(params[:id])
+    @task.tasks_labels.destroy_all # 中間テーブルの関連レコードを削除
+    #
     @task.destroy
     redirect_to tasks_path, notice: t("flash.tasks.destroyed")
   end
