@@ -13,8 +13,14 @@
 </div>
 
 <div class="form-group mx-sm-3 mb-2">
-  <%= form.label :label_id, t('activerecord.attributes.label.labels') %>
-  <%= form.select :label_id, Label.all.collect { |label| [label.name, label.id] }, include_blank: true, selected: params[:label_id], class: "form-control" %>
+  <%= form.label :label_id, t('activerecord.attributes.label.label') %>
+  <select name="search[label_id]" id="search_label_id" class="form-control">
+    <option value=""></option> <%# 空のオプションを追加 %>
+    <% @labels.each do |label| %>
+    <option value="<%= label.id %>"><%= label.name %></option>
+    <% end %>
+  </select>
+  <%# <%= form.select :label_id, Label.all.collect { |label| [label.name, label.id] }, include_blank: true, selected: params[:label_id], class: "form-control" %>
 </div>
 
 <%= form.submit "検索", class: "btn btn-info" %>
