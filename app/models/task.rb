@@ -24,8 +24,8 @@ class Task < ApplicationRecord
         ->(status) { where(status: statuses[status]) if status.present? }
   # ラベル検索用スコープ
   scope :search_by_label,
-        ->(label_id) do
-          joins(:labels).where(labels: { id: label_id }) if label_id.present?
+        ->(label) do
+          joins(:labels).where(labels: { id: label }) if label.present?
         end
 
   # ソート用スコープ

@@ -24,7 +24,7 @@ class TasksController < ApplicationController
       @tasks
         .search_by_title(@search_params[:title])
         .search_by_status(@search_params[:status])
-        .search_by_label(@search_params[:label_id])
+        .search_by_label(@search_params[:label])
 
     # puts @search_params.inspect #コンソールでエラー原因の確認に使用
 
@@ -100,6 +100,7 @@ class TasksController < ApplicationController
       :priority,
       :status,
       label_ids: [] # 配列としてlabel_idsを許可
+      # label_ids: []は多対多の関連で task に複数の label を関連付けるための設定で、label_ids パラメータを配列として許可しています。
     )
   end
 
@@ -110,7 +111,7 @@ class TasksController < ApplicationController
   # end
 
   def search_params
-    params.fetch(:search, {}).permit(:title, :status, :label_id)
+    params.fetch(:search, {}).permit(:title, :status, :label)
   end
 
   # 他人のタスク詳細画面や編集画面にアクセスしようとした場合、タスク一覧画面にリダイレクト
