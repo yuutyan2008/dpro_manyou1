@@ -9,6 +9,10 @@ class ApplicationController < ActionController::Base
   # ログイン中のユーザーがログインページにアクセスしようとした場合redirect_if_logged_inを実行
   before_action :redirect_if_logged_in, only: %i[new create]
 
+  def routing_error
+    raise ActionController::RoutingError, params[:path]
+  end
+
   private # 外部から直接呼び出されないようにする
 
   # ログインしなければアクセスできないよう制限
@@ -39,19 +43,13 @@ class ApplicationController < ActionController::Base
     rescue_from ActionController::RoutingError, with: :_render_404
   end
 
-  def routing_error
-    raise ActionController::RoutingError, params[:path]
-  end
-
-  private
-
   def _render_404(e = nil)
     logger.info "Rendering 404 with excaption: #{e.message}" if e
 
     if request.format.to_sym == :json
       render json: { error: "404 Not Found" }, status: :not_found
     else
-      render "errors/404.html", status: :not_found, layout: "error"
+      render "errors/404.html", status: :not_found
     end
   end
 
@@ -64,7 +62,7 @@ class ApplicationController < ActionController::Base
              },
              status: :internal_server_error
     else
-      render "errors/500.html", status: :internal_server_error, layout: "error"
+      render "errors/500.html", status: :internal_server_error
     end
   end
 end

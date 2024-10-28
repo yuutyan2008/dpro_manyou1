@@ -1,7 +1,7 @@
 # app/controllers/labels_controller.rb
 class LabelsController < ApplicationController
   def index
-    @labels = Label.includes(:tasks) # タスクと関連付けられたラベルを取得
+    @labels = current_user.labels.includes(:tasks) # タスクと関連付けられたラベルを取得
   end
 
   def new
