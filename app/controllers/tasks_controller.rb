@@ -8,17 +8,23 @@ class TasksController < ApplicationController
   # editは編集データを取得する必要がある
   before_action :search_params, only: %i[show edit update destroy]
 
+  before_action :set_task, only: %i[show edit update destroy]
+  before_action :set_labels, only: %i[index show new create edit update]
+
   def index
-    # dログインしているユーザーのタスクのみ表示
+    # @tasks = current_user.tasksで検索対象のデータ全体を取得
     @tasks = current_user.tasks
+    # binding.irb
     # 検索パラメータの初期化
     # earch_paramsメソッドで許可した値のみ取得して@search_paramsに格納
     @search_params = search_params
-    # 検索機能（スコープを適用）
+
+    # 検索の実行（スコープを適用）
     @tasks =
-      @tasks.search_by_title(@search_params[:title]).search_by_status(
-        @search_params[:status]
-      )
+      @tasks
+        .search_by_title(@search_params[:title])
+        .search_by_status(@search_params[:status])
+        .search_by_label(@search_params[:label])
 
     # puts @search_params.inspect #コンソールでエラー原因の確認に使用
 
@@ -42,18 +48,21 @@ class TasksController < ApplicationController
   # render :index
 
   def show
-    @task = Task.find(params[:id])
+    # @task = Task.find(params[:id])
+    # @labels = current_user.labels # ログイン中のユーザが作成したラベルのみ取得
   end
 
   def new
     @task = Task.new
+    # @labels = current_user.labels # ログイン中のユーザが作成したラベルのみ取得
   end
 
   def create
     # current_userはusercontrollerで設定、ログイン中のuser_idでuser情報を取得
     @task = current_user.tasks.build(task_params)
+    # binding.irb
     if @task.save
-      redirect_to tasks_path, notice: t("flash.create.success")
+      redirect_to tasks_path, notice: t("flash.tasks.created")
     else
       Rails.logger.info @task.errors.full_messages.to_sentence # エラー内容をログに出力
       render :new
@@ -61,22 +70,26 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = Task.find(params[:id])
+    # @task = Task.find(params[:id])
+    # @labels = current_user.labels # ログイン中のユーザが作成したラベルのみ取得
   end
 
   def update
-    @task = Task.find(params[:id])
+    # @task = Task.find(params[:id])
+    # @labels = current_user.labels # ログイン中のユーザが作成したラベルのみ取得
     if @task.update(task_params)
-      redirect_to task_path(@task), notice: t("flash.update.success")
+      redirect_to task_path(@task), notice: t("flash.tasks.updated")
     else
       render :edit
     end
   end
 
   def destroy
-    @task = Task.find(params[:id])
+    # @task = Task.find(params[:id])
+    @task.tasks_labels.destroy_all # 中間テーブルの関連レコードを削除
+    #
     @task.destroy
-    redirect_to tasks_path, notice: t("flash.destroy.success")
+    redirect_to tasks_path, notice: t("flash.tasks.destroyed")
   end
 
   private
@@ -87,16 +100,20 @@ class TasksController < ApplicationController
       :content,
       :deadline_on,
       :priority,
-      :status
+      :status,
+      label_ids: [] # 配列としてlabel_idsを許可
+      # label_ids: []は多対多の関連で task に複数の label を関連付けるための設定で、label_ids パラメータを配列として許可しています。
     )
   end
 
   # ストロングパラメータの設定
-  # このメソッドを追加して、search パラメータ内の title と status だけを許可します。
+  # このメソッドを追加して、search パラメータ内の title と status label_idだけを許可します。
+  # def search_params
+  #   params.permit(:title, :status, :label_id)
+  # end
+
   def search_params
-    # search パラメータが存在することを確認し、その中で title と status だけを許可します。
-    # :search パラメータが存在しない場合に、空のハッシュ {} を返す
-    params.fetch(:search, {}).permit(:title, :status)
+    params.fetch(:search, {}).permit(:title, :status, :label)
   end
 
   # 他人のタスク詳細画面や編集画面にアクセスしようとした場合、タスク一覧画面にリダイレクト
@@ -106,5 +123,14 @@ class TasksController < ApplicationController
       flash[:alert] = I18n.t("flash.admin.index")
       redirect_to tasks_path
     end
+  end
+
+  def set_task
+    @task = Task.find(params[:id])
+  end
+
+  def set_labels
+    @labels = current_user.labels
+    # puts "Labels for current user: #{@labels.inspect}" # デバッグ出力
   end
 end

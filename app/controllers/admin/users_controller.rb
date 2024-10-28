@@ -22,7 +22,7 @@ module Admin
       if @user.save
         # 国際化（i18n）
         # ja.yml に定義したフラッシュメッセージに翻訳
-        flash[:notice] = t("flash.admin.create")
+        flash[:notice] = t("flash.admin.created")
         # ユーザ登録に成功した場合の処理、user一覧画面に遷移
         redirect_to admin_users_path
       else
@@ -49,7 +49,7 @@ module Admin
         # 国際化（i18n）
         # ja.yml に定義したフラッシュメッセージに翻訳
         # binding.irb
-        flash[:notice] = t("flash.admin.update")
+        flash[:notice] = t("flash.admin.updated")
         # binding.irb
 
         redirect_to admin_users_path
@@ -66,7 +66,7 @@ module Admin
       if @user.destroy
         # ココ(削除実行直前)でmodelに定義したコールバックが呼ばれる
 
-        flash[:notice] = t("flash.admin.destroy")
+        flash[:notice] = t("flash.admin.destroyed")
       else
         # バリデーションに失敗で@user.errors.full_messagesにエラーメッセージが配列として追加されます
         # .join(", "): 配列内の全てのエラーメッセージをカンマ区切り（, ）で連結

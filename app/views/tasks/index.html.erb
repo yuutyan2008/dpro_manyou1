@@ -1,18 +1,32 @@
 <h1><%= t('view.tasks.index.title') %></h1>
-<%# 検索機能 %>
-<%= form_with(scope: :search, url: tasks_path, method: :get, local: true) do |form| %>
-<%# ステータス検索フォーム %>
-<%= form.label :status, t('activerecord.attributes.task.status') %>
-<%= form.select :status, options_for_select(Task.statuses.keys.map { |key| [Task.human_attribute_name("status.#{key}"), key] }, selected: @search_params[:status]), include_blank: true, id: "search_status" %>
-<%# タイトルあいまい検索フォーム %>
-<%= form.label :title, "タイトル" %>
-<%= form.text_field :title, value: @search_params[:title], id: "search_title" %>
-<%= form.submit "検索", id: "search_task" %>
+
+<%# 検索機能フォームのデザインを Bootstrap で適用 %>
+<%= form_with(url: tasks_path, method: :get, local: true, class: 'form-inline') do |form| %>
+<div class="form-group mx-sm-3 mb-2">
+  <%= form.label :status, t('activerecord.attributes.task.status') %>
+  <%= form.select :status, [['未着手', 'not_started'], ['着手中', 'under_way'], ['完了', 'completed']], include_blank: true, selected: params[:status], class: "form-control" %>
+</div>
+
+<div class="form-group mx-sm-3 mb-2">
+  <%= form.label :title, t('activerecord.attributes.task.title'), for: "search_title" %>
+  <%= form.text_field :title, value: params[:title], id: "search_title", class: "form-control" %>
+</div>
+
+<div class="form-group mx-sm-3 mb-2">
+  <%= form.label :label, t('activerecord.attributes.label.label') %>
+  <select name="search[label]" id="search_label" class="form-control">
+    <option value=""></option> <%# 空のオプションを追加 %>
+    <% @labels.each do |label| %>
+    <option value="<%= label.id %>"><%= label.name %></option>
+    <% end %>
+  </select>
+</div>
+
+<%= form.submit "検索", class: "btn btn-info", id: "search_task" %>
 <% end %>
 
-<%# タスクが存在する場合のみタスク一覧を表示 %>
 <% if @tasks.any? %>
-<table>
+<table class="table table">
   <thead>
     <tr>
       <th><%= Task.human_attribute_name(:title) %></th>
@@ -20,12 +34,11 @@
       <th><%= Task.human_attribute_name(:created_at) %></th>
       <th><%= link_to t('activerecord.attributes.task.deadline_on'), { sort_deadline_on: true, page: params[:page] } %>
       </th>
-      <th><%= link_to t('activerecord.attributes.task..priority'), { sort_priority: true, page: params[:page] } %></th>
+      <th><%= link_to t('activerecord.attributes.task.priority'), { sort_priority: true, page: params[:page] } %></th>
       <th><%= Task.human_attribute_name(:status) %></th>
       <th colspan="3"></th>
     </tr>
   </thead>
-
   <tbody>
     <% @tasks.each do |task| %>
     <tr>
@@ -33,23 +46,19 @@
       <td class="task-content"><%= task.content %></td>
       <td class="task-created_at"><%= task.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
       <td class="deadline_on"><%= task.deadline_on.strftime("%Y-%m-%d") %></td>
-      <!-- 優先度の enum の表示 -->
       <td><%= I18n.t("activerecord.enums.task.priority.#{task.priority}") %></td>
       <td><%= I18n.t("activerecord.enums.task.status.#{task.status}") %></td>
-      <td><%= link_to t('common.show'), task, class: 'show-task' %></td>
-      <td><%= link_to t('common.edit'), edit_task_path(task), class: 'edit-task' %></td>
+      <td><%= link_to t('common.show'), task, class: 'btn btn-info' %></td>
+      <td><%= link_to t('common.edit'), edit_task_path(task), class: 'btn btn-info' %></td>
       <td>
-        <%= link_to t('common.destroy'), task,  method: :delete, data: { confirm: t('tasks.index.links.confirm_destroy') }, class: 'destroy-task' %>
+        <%= link_to t('common.destroy'), task, method: :delete, data: { confirm: t('common.confirm_destroy') }, class: 'btn btn-outline-danger' %>
       </td>
     </tr>
     <% end %>
   </tbody>
 </table>
-<%= paginate @tasks %>
-<!-- ページネーションリンクを表示 -->
 
-<%# 存在しない場合にはメッセージを表示 %>
+<%= paginate @tasks %>
 <% else %>
 <p>まだタスクがありません。</p>
 <% end %>
-<br>

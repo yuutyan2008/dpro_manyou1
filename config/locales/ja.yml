@@ -28,6 +28,15 @@ ja:
           title: "ユーザ一覧ページ"
         show:
           title: "ユーザ詳細ページ"
+    labels:
+      new:
+        title: "ラベル登録ページ"
+      edit:
+        title: "ラベル編集ページ"
+      index:
+        title: "ラベル一覧ページ"
+      show:
+        title: "ラベル詳細ページ"
 
   activerecord:
     errors:
@@ -48,22 +57,28 @@ ja:
 
         task:
           prohibited: "%{count}件のエラーにより、このタスクは保存されませんでした。"
-          # user:
+          attributes:
+            title:
+              blank: "を入力してください"
+            content:
+              blank: "を入力してください"
+            created_at:
+              blank: "を入力してください"
+            deadline_on:
+              blank: "を入力してください"
+            priority:
+              blank: "を入力してください"
+            status:
+              blank: "を入力してください"
+        label:
           attributes:
             name:
-              blank: "名前を入力してください"
-            email:
-              blank: "メールアドレスを入力してください"
-              taken: "メールアドレスはすでに使用されています"
-            password:
-              blank: "パスワードを入力してください"
-              too_short: "パスワードは6文字以上で入力してください"
-            password_confirmation:
-              confirmation: "パスワード（確認）とパスワードの入力が一致しません"
+              blank: "を入力してください"
 
     # モデル名
     models:
       task:
+      label: "ラベル"
     # modelの属性名だけココに書き、属性に設定する値は同じ階層に別記する
     attributes:
       # activerecord.attributesの下のmodel名は単数形
@@ -81,6 +96,10 @@ ja:
         password_confirmation: "パスワード（確認）"
         admin: "管理者権限"
         task_num: "タスク数"
+      label:
+        label: "ラベル"
+        name: "名前"
+
     enums:
       task:
         priority:
@@ -113,24 +132,28 @@ ja:
       update: 更新する
   flash:
     users:
-      create: "アカウントを登録しました"
-      update: "アカウントを更新しました"
-      destroy: "アカウントを削除しました"
+      created: "アカウントを登録しました"
+      updated: "アカウントを更新しました"
+      destroyed: "アカウントを削除しました"
     admin:
       index: "アクセス権限がありません"
-      create: "ユーザを登録しました"
-      update: "ユーザを更新しました"
-      destroy: "ユーザを削除しました"
+      created: "ユーザを登録しました"
+      updated: "ユーザを更新しました"
+      destroyed: "ユーザを削除しました"
     tasks:
-      created: "タスクを登録しました。"
-      updated: "タスクを更新しました。"
-      destroyed: "タスクを削除しました。"
+      created: "タスクを登録しました"
+      updated: "タスクを更新しました"
+      destroyed: "タスクを削除しました"
     sessions:
       create_success: "ログインしました"
       create_failure: "メールアドレスまたはパスワードに誤りがあります"
       destroy: "ログアウトしました"
       login_required: "ログインしてください"
       logout_required: "ログアウトしてください"
+    labels:
+      created: "ラベルを登録しました"
+      updated: "ラベルを更新しました"
+      destroyed: "ラベルを削除しました"
 
   # 複数サイトの共通設定をココに書く
   common:

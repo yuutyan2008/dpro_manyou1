@@ -82,14 +82,12 @@ RSpec.describe "タスクモデル機能", type: :model do
     # タスクのタイトル、説明、期限、優先度、ステータスが全て正しい場合
     context "全ての属性が正しい場合" do
       it "タスクを登録できる" do
-        task =
-          Task.create(
-            title: "企画書",
-            content: "企画書を作成する。",
-            deadline_on: Date.today,
-            priority: 1,
-            status: 1
-          )
+        # 一対多の関係のユーザー、taskを順番に作成
+        # taskは、belongs_to :user の関係があるため、作成時にそのタスクがどの user に属しているのかを指定する必要があるから
+        user = FactoryBot.create(:user)
+
+        # ユーザーを関連付けてタスクを作成
+        task = FactoryBot.create(:task, user: user)
         expect(task).to be_valid
       end
     end
@@ -107,6 +105,11 @@ RSpec.describe "タスクモデル機能", type: :model do
     let!(:third_task) do
       FactoryBot.create(:task, title: "third_task_title", status: :completed)
     end
+
+    # 万葉課題５
+    let!(:label1) { FactoryBot.create(:label, name: "重要") }
+    let!(:label2) { FactoryBot.create(:label, name: "緊急") }
+    let!(:label3) { FactoryBot.create(:label, name: "その他") }
 
     context "scopeメソッドでタイトルのあいまい検索をした場合" do
       it "検索ワードを含むタスクが絞り込まれる" do
@@ -142,6 +145,21 @@ RSpec.describe "タスクモデル機能", type: :model do
         expect(
           Task.search_by_title("first").search_by_status("not_started").count
         ).to eq 1
+      end
+    end
+
+    # 万葉課題５
+    context "scopeメソッドでラベル検索をした場合" do
+      it "指定されたラベルに完全一致するタスクが絞り込まれる" do
+        # タスクにラベルを関連付ける
+        first_task.labels << label1
+        second_task.labels << label2
+        third_task.labels << label3
+
+        expect(Task.search_by_label(label1.id)).to include(first_task)
+        expect(Task.search_by_label(label1.id)).not_to include(second_task)
+        expect(Task.search_by_label(label1.id)).not_to include(third_task)
+        expect(Task.search_by_label(label1.id).count).to eq 1
       end
     end
   end

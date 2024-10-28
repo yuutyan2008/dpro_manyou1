@@ -1,0 +1,3 @@
+<h1><%= t('view.labels.new.title') %></h1>
+
+<%= render 'form', label: @label, url: labels_path, method: :post, button_label: t('helpers.submit.create') %>

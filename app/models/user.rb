@@ -21,7 +21,7 @@ class User < ApplicationRecord
   # User モデルと Task モデルの間にアソシエーションを設定
   # ユーザーが削除されると、そのユーザーに関連するタスクも削除
   has_many :tasks, dependent: :destroy
-
+  has_many :labels, dependent: :destroy
   # 管理者が1人しかいない状態でそのユーザを削除できないようにする
   # if: -> { admin? } :管理者 (admin == true) のみで実行
   before_destroy :ensure_an_admin_remains, if: -> { admin? }
