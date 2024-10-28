@@ -66,7 +66,7 @@ module Admin
       if @user.destroy
         # ココ(削除実行直前)でmodelに定義したコールバックが呼ばれる
 
-        flash[:notice] = t("flash.admin.destroyde")
+        flash[:notice] = t("flash.admin.destroyed")
       else
         # バリデーションに失敗で@user.errors.full_messagesにエラーメッセージが配列として追加されます
         # .join(", "): 配列内の全てのエラーメッセージをカンマ区切り（, ）で連結

@@ -51,7 +51,7 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       # 国際化（i18n）
       # ja.yml に定義したフラッシュメッセージに翻訳
-      flash[:notice] = t("flash.users.updated")
+      flash[:notice] = t("flash.admin.updated")
       redirect_to user_path
     else
       render :edit
@@ -63,7 +63,7 @@ class UsersController < ApplicationController
     if @user.destroy
       # ココ(削除実行直前)でmodelに定義したコールバックが呼ばれる
 
-      flash[:notice] = t("flash.admin.destroyd")
+      flash[:notice] = t("flash.admin.destroyed")
     else
       # バリデーションに失敗で@user.errors.full_messagesにエラーメッセージが配列として追加されます
       # .join(", "): 配列内の全てのエラーメッセージをカンマ区切り（, ）で連結

@@ -138,7 +138,7 @@ ja:
     admin:
       index: "アクセス権限がありません"
       created: "ユーザを登録しました"
-      updateed: "ユーザを更新しました"
+      updated: "ユーザを更新しました"
       destroyed: "ユーザを削除しました"
     tasks:
       created: "タスクを登録しました"

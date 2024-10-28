@@ -8,7 +8,8 @@ FactoryBot.define do
     deadline_on { "2024-10-15" }
     priority { 1 }
     status { 1 }
-    association :user # user_idを必ず関連付ける
+
+    # association :user # user_idを必ず関連付ける
 
     # 特定のタスク属性を指定するtrait
     trait :first_task do
@@ -38,7 +39,11 @@ FactoryBot.define do
     # 多対多の関連付けのため、taskデータ作成時にlabelと紐づける
     trait :with_labels do
       after(:create) do |task|
-        task.labels << FactoryBot.create(:label, name: "重要")
+        task.labels << FactoryBot.create(
+          :label,
+          name: "重要",
+          user_id: task.user_id # ログイン中のuserと紐づいたtaskを登録
+        )
       end
     end
   end

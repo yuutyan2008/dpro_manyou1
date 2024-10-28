@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :label do
     name { "重要" }
-    association :user # ユーザーとの関連付けを追加
+    # association :user # ユーザーとの関連付けを追加
   end
 
   factory :third_task do
@@ -10,7 +10,7 @@ FactoryBot.define do
     deadline_on { "2024-10-16" }
     priority { 1 }
     status { 1 }
-    association :user # ユーザーとの関連付け
+    # association :user # ユーザーとの関連付け
 
     # trait は、FactoryBotで特定の条件や追加機能を持たせたい場合に使うメソッド
     # :with_labelsという名前のトレイトを作成

@@ -1,4 +1,4 @@
-git require "rails_helper"
+require "rails_helper"
 
 RSpec.describe User, type: :model do
   describe "バリデーションのテスト" do
@@ -61,7 +61,7 @@ RSpec.describe User, type: :model do
             password_confirmation: "password"
           )
         expect(user).not_to be_valid
-        expect(user.errors[:email]).to include("はすでに存在します")
+        expect(user.errors[:email]).to include("はすでに使用されています")
       end
     end
 
